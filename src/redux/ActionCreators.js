@@ -75,3 +75,79 @@ export const fetchItems = () => (dispatch) => {
         .then(payload => dispatch(addItems(payload)))
         .catch(error => dispatch(itemsFailed(error.message)));
 }
+
+export const ingredientsFailed = (errmess) => ({
+    type: ActionTypes.INGREDIENTS_FAILED,
+    payload: errmess
+});
+
+export const addIngredients = (payload) => ({
+    type: ActionTypes.ADD_INGREDIENTS,
+    payload: payload
+})
+
+export const ingredientsLoading = () => ({
+    type: ActionTypes.INGREDIENTS_LOADING
+});
+
+export const fetchIngredients = () => (dispatch) => {
+    dispatch(dietsLoading(true));
+
+    return fetch(baseUrl+'ingredients')
+        .then(response => {
+            if(response.ok){
+                return response;
+            }
+            else {
+                var error = new Error('Error ' + response.status + ': ' + response.statusText)
+                error.response = response;
+                throw error;
+            }
+        },
+        error => {
+            var errmess = new Error(error.message);
+            throw errmess;
+        })
+        .then(response => response.json())
+        .then(payload => dispatch(addIngredients(payload)))
+        .catch(error => dispatch(ingredientsFailed(error.message)));
+}
+
+export const postIngredient = (name) => (dispatch) => {
+    const newIngredient = {
+        name: name,
+    }
+
+    return fetch(baseUrl + 'ingredients',{
+        method: 'POST',
+        body: JSON.stringify(newIngredient),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'same-origin'
+    })
+    .then(response => {
+        if(response.ok){
+            return response;
+        }
+        else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText)
+            error.response = response;
+            throw error;
+        }
+    },
+    error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => response.json())
+    .then(response => dispatch(addIngredient(response)))
+    .catch(error => { console.log('Add Ingredient ', error.message)
+    alert('Your ingredient could not be added\nError: ' + error.message)})
+}
+
+export const addIngredient = (payload) => ({
+    type: ActionTypes.ADD_INGREDIENT,
+    payload:payload
+});
+
