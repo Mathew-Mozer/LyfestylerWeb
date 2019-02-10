@@ -151,3 +151,30 @@ export const addIngredient = (payload) => ({
     payload:payload
 });
 
+export const fetchFoodTags = () => (dispatch) => {
+
+    return fetch(baseUrl+'foodtags')
+        .then(response => {
+            if(response.ok){
+                return response;
+            }
+            else {
+                var error = new Error('Error ' + response.status + ': ' + response.statusText)
+                error.response = response;
+                throw error;
+            }
+        },
+        error => {
+            var errmess = new Error(error.message);
+            throw errmess;
+        })
+        .then(response => response.json())
+        .then(payload => dispatch(addFoodTags(payload)))
+        .catch(error => console.log("Error getting Food Type "+error.message));
+}
+
+export const addFoodTags = (payload) => ({
+    type: ActionTypes.ADD_FOODTAGS,
+    payload:payload
+});
+

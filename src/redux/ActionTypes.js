@@ -10,3 +10,5 @@ export const ADD_INGREDIENTS = 'ADD_INGREDIENTS' //Adds all Ingredients to the i
 export const ADD_INGREDIENT = 'ADD_INGREDIENT' // Adds a single Ingredient to the array
 export const INGREDIENTS_LOADING = 'INGREDIENTS_LOADING';
 export const INGREDIENTS_FAILED = 'INGREDIENTS_FAILED';
+
+export const ADD_FOODTAGS = 'ADD_FOODTAGS' //Adds all Ingredients to the ingredient array

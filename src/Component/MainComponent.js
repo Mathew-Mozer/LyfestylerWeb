@@ -3,7 +3,7 @@ import Home from './HomeComponent';
 import Header from './HeaderComponent';
 import WoeViewer from './WOEViewer'
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
-import { fetchDiets, fetchItems,fetchIngredients,postIngredient } from '../redux/ActionCreators'
+import { fetchDiets, fetchItems,fetchIngredients,postIngredient,fetchFoodTags } from '../redux/ActionCreators'
 import { connect } from 'react-redux';
 import {Diets,Items} from '../shared/data';
 import ItemViewer from './ItemViewComponent';
@@ -23,6 +23,7 @@ const mapDispatchToProps = (dispatch) => ({
     fetchDiets: () => {dispatch(fetchDiets())},
     fetchItems: () => {dispatch(fetchItems())},
     fetchIngredients: () => {dispatch(fetchIngredients())},
+    fetchFoodTags: () => {dispatch(fetchFoodTags())},
     resetAddIngredientForm: () => { dispatch(actions.reset('addIngredient'))}
   })
 
@@ -32,6 +33,7 @@ class Main extends Component {
         this.props.fetchDiets();
         this.props.fetchItems();
         this.props.fetchIngredients();
+        this.props.fetchFoodTags();
       }
 
     render() {

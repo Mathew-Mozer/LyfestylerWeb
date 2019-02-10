@@ -2,6 +2,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { createForms } from 'react-redux-form'
 import { Diets } from './diets'
 import { Items } from './items'
+import { FoodTags } from './foodtags'
 import { Ingredients } from './ingredients'
 import thunk from 'redux-thunk'
 import logger from 'redux-logger'
@@ -12,6 +13,7 @@ export const ConfigureStore = () => {
         combineReducers({
             diets: Diets,
             items: Items,
+            foodTags: FoodTags,
             ingredients: Ingredients,
             ...createForms({
                 addIngredient: addIngredient
