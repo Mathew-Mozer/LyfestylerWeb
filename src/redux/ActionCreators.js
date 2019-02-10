@@ -113,11 +113,11 @@ export const fetchIngredients = () => (dispatch) => {
         .catch(error => dispatch(ingredientsFailed(error.message)));
 }
 
-export const postIngredient = (name) => (dispatch) => {
+export const postIngredient = (name,tags) => (dispatch) => {
     const newIngredient = {
         name: name,
+        tags: tags
     }
-
     return fetch(baseUrl + 'ingredients',{
         method: 'POST',
         body: JSON.stringify(newIngredient),

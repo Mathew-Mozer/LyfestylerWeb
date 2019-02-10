@@ -1,20 +1,25 @@
 import React, { Component } from 'react'
 import { Container, Row, Col, Label } from 'reactstrap';
-import { Control, Form, Errors } from 'react-redux-form';
+import { Control, Form, Errors,actions } from 'react-redux-form';
 import FoodIngredientItems from './FoodIngredientItems'
+import { connect } from 'react-redux';
+import Chip from '@material-ui/core/Chip';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len)
 const minLength = (len) => (val) => (val) && (val.length >= len)
 
-export default class IngredientView extends Component {
+
+
+class IngredientView extends Component {
 
     handleAddIngredientSubmit(values) {
-        this.props.postIngredient(values.name)
+        this.props.postIngredient(values.name,values.tags)
         this.props.resetAddIngredientForm();
     }
 
     render(){
+        const initialMember = { firstName: '', lastName: '' };
         return(
             <Container>
             <Row>
@@ -48,6 +53,17 @@ export default class IngredientView extends Component {
                                         />
                                     </Col>
                                 </Row>
+                                <Row>
+                                    <Col>Ingredient Tags(Solid=Added)</Col>
+                                </Row><Row>
+                                    <Col>
+                                      {this.props.foodTags.foodTags.map((tag)=>{
+                                          return(<Chip label={tag.name} onClick={() => this.props.dispatch(actions.push('addIngredient.tags', tag))} color="primary" variant={this.props.addIngredient.tags.includes(tag)? "default":"outlined"} />)
+                                      })}
+                                      {console.log("Current Food Tags",JSON.stringify(this.props.addIngredient.tags))}
+                                    </Col>
+                                </Row>
+                              
                             </Form>
                         </Col>
             </Row>
@@ -56,3 +72,4 @@ export default class IngredientView extends Component {
     }
 }
 
+export default connect(({addIngredient}) => ({addIngredient}))(IngredientView)

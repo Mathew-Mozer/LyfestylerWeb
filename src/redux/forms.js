@@ -1,3 +1,4 @@
 export const addIngredient = {
-    name: ''
+    name: '',
+    tags:[]
 }

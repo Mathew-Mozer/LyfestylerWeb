@@ -14,12 +14,13 @@ const mapStateToProps = state => {
     return {
       diets: state.diets,
       items: state.items,
-      ingredients: state.ingredients
+      ingredients: state.ingredients,
+      foodTags: state.foodTags
     }   
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    postIngredient: (name) => dispatch(postIngredient(name)),
+    postIngredient: (name,tags) => dispatch(postIngredient(name,tags)),
     fetchDiets: () => {dispatch(fetchDiets())},
     fetchItems: () => {dispatch(fetchItems())},
     fetchIngredients: () => {dispatch(fetchIngredients())},
@@ -46,7 +47,7 @@ class Main extends Component {
                 <Header diets={Diets}/>
                 <Switch>
                     <Route path="/home" render={()=><Home/>} />
-                    <Route exact path="/ingredients" render={()=><IngredientViewer postIngredient={this.props.postIngredient} resetAddIngredientForm={this.props.resetAddIngredientForm} ingredients={this.props.ingredients} />} />
+                    <Route exact path="/ingredients" render={()=><IngredientViewer postIngredient={this.props.postIngredient} foodTags={this.props.foodTags} resetAddIngredientForm={this.props.resetAddIngredientForm} ingredients={this.props.ingredients} />} />
                     <Route path="/woe/:dietId" component={DietWithId}/>            
                     <Route path="/scan/:upc" component={scanItem}/>            
                     <Redirect to="/home" />

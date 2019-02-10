@@ -5,7 +5,7 @@ import { compareByName } from '../shared/sortTools'
 export const Ingredients = (state= {
         isLoading: true,
         errMess: null,
-        items:[]
+        ingredients:[]
     }, action) => {
     switch(action.type){
         case ActionTypes.ADD_INGREDIENTS:
