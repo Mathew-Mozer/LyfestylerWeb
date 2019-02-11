@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Container,Row,Col } from 'reactstrap';
+import {Link} from 'react-router-dom'
 export default class Home extends Component{
 
     render(){
@@ -8,7 +9,7 @@ export default class Home extends Component{
             <Container>
                 <Row>
                     <Col className="border border-info rounded" sm={12} md={{size:5,offset:1}} >Scan Food Item</Col>
-                    <Col className="border border-info rounded" sm={12} md={{size:5,offset:1}}>test</Col>
+                    <Col className="border border-info rounded" sm={12} md={{size:5,offset:1}}><Link to={`/ingredients`} activeClassName="active">Ingredients</Link></Col>
                 </Row>
             </Container>
             </div>

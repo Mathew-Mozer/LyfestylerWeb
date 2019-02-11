@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom'
 //import SearchIcon from '@material-ui/icons/Search';
 
 
@@ -18,9 +19,11 @@ function Header(props) {
       <AppBar position="static">
         <Toolbar>
 
+        <Link style={{color:'white',textDecoration:'none'}} to={`/home`} >
           <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-            Diet App
+          Diet App
           </Typography>
+          </Link>
           <div className={classes.grow} />
           <div className={classes.search}>
             <div className={classes.searchIcon}>

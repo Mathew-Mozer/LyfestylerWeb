@@ -117,7 +117,7 @@ export const fetchIngredients = () => (dispatch) => {
 }
 
 export const postIngredient = (name,tags) => (dispatch) => {
-    dispatch(ingredientsLoading(false))
+    //dispatch(ingredientsLoading(false))
     const newIngredient = {
         name: name,
         tags: tags
@@ -151,7 +151,7 @@ export const postIngredient = (name,tags) => (dispatch) => {
     alert('Your ingredient could not be added\nError: ' + error.message)})
 }
 export const putIngredient = (ingredient) => (dispatch) => {
-    dispatch(ingredientsLoading(false))
+    //dispatch(ingredientsLoading(false))
     return fetch(baseUrl+'ingredients/'+ingredient.id,{
         method: 'PUT',
         body: JSON.stringify(ingredient),
