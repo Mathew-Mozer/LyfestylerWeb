@@ -3,7 +3,7 @@ import Home from './HomeComponent';
 import Header from './HeaderComponent';
 import WoeViewer from './WOEViewer'
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
-import { fetchDiets, fetchItems,fetchIngredients,postIngredient,fetchFoodTags } from '../redux/ActionCreators'
+import { fetchDiets, fetchItems,fetchIngredients,postIngredient,fetchFoodTags,putIngredient,deleteIngredient } from '../redux/ActionCreators'
 import { connect } from 'react-redux';
 import {Diets,Items} from '../shared/data';
 import ItemViewer from './ItemViewComponent';
@@ -20,7 +20,9 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    postIngredient: (name,tags) => dispatch(postIngredient(name,tags)),
+    postIngredient: (id,name,tags) => dispatch(postIngredient(id,name,tags)),
+    putIngredient: (ingredient) => dispatch(putIngredient(ingredient)),
+    deleteIngredient: (ingredient) => dispatch(deleteIngredient(ingredient)),
     fetchDiets: () => {dispatch(fetchDiets())},
     fetchItems: () => {dispatch(fetchItems())},
     fetchIngredients: () => {dispatch(fetchIngredients())},
@@ -36,7 +38,6 @@ class Main extends Component {
         this.props.fetchIngredients();
         this.props.fetchFoodTags();
       }
-
     render() {
 
         const DietWithId = ({match}) => <WoeViewer diet={Diets.filter((diet) => diet.id===parseInt(match.params.dietId,10))[0]}/>
@@ -47,7 +48,7 @@ class Main extends Component {
                 <Header diets={Diets}/>
                 <Switch>
                     <Route path="/home" render={()=><Home/>} />
-                    <Route exact path="/ingredients" render={()=><IngredientViewer postIngredient={this.props.postIngredient} foodTags={this.props.foodTags} resetAddIngredientForm={this.props.resetAddIngredientForm} ingredients={this.props.ingredients} />} />
+                    <Route exact path="/ingredients" render={()=><IngredientViewer editIngredient={this.props.editIngredient} deleteIngredient={this.props.deleteIngredient} postIngredient={this.props.postIngredient} putIngredient={this.props.putIngredient} foodTags={this.props.foodTags} resetAddIngredientForm={this.props.resetAddIngredientForm} ingredients={this.props.ingredients} />} />
                     <Route path="/woe/:dietId" component={DietWithId}/>            
                     <Route path="/scan/:upc" component={scanItem}/>            
                     <Redirect to="/home" />

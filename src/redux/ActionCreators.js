@@ -1,5 +1,6 @@
 import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../shared/baseUrl'
+import { actions } from 'react-redux-form'
 
 export const dietsFailed = (errmess) => ({
     type: ActionTypes.DIETS_FAILED,
@@ -86,9 +87,11 @@ export const addIngredients = (payload) => ({
     payload: payload
 })
 
-export const ingredientsLoading = () => ({
-    type: ActionTypes.INGREDIENTS_LOADING
+export const ingredientsLoading = (payload=true) => ({
+    type: ActionTypes.INGREDIENTS_LOADING,
+    payload:payload
 });
+
 
 export const fetchIngredients = () => (dispatch) => {
     dispatch(dietsLoading(true));
@@ -114,11 +117,13 @@ export const fetchIngredients = () => (dispatch) => {
 }
 
 export const postIngredient = (name,tags) => (dispatch) => {
+    dispatch(ingredientsLoading(false))
     const newIngredient = {
         name: name,
         tags: tags
     }
-    return fetch(baseUrl + 'ingredients',{
+
+    return fetch(baseUrl+'ingredients',{
         method: 'POST',
         body: JSON.stringify(newIngredient),
         headers: {
@@ -145,11 +150,81 @@ export const postIngredient = (name,tags) => (dispatch) => {
     .catch(error => { console.log('Add Ingredient ', error.message)
     alert('Your ingredient could not be added\nError: ' + error.message)})
 }
+export const putIngredient = (ingredient) => (dispatch) => {
+    dispatch(ingredientsLoading(false))
+    return fetch(baseUrl+'ingredients/'+ingredient.id,{
+        method: 'PUT',
+        body: JSON.stringify(ingredient),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'same-origin'
+    })
+    .then(response => {
+        if(response.ok){
+            return response;
+        }
+        else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText)
+            error.response = response;
+            throw error;
+        }
+    },
+    error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => response.json())
+    .then(response => dispatch(updateIngredient(response)))
+    .catch(error => { console.log('Add Ingredient ', error.message)
+    alert('Your ingredient could not be added\nError: ' + error.message)})
+}
+
+export const deleteIngredient = (ingredient) => (dispatch) => {
+    dispatch(ingredientsLoading(false))
+    return fetch(baseUrl+'ingredients/'+ingredient.id,{
+        method: 'DELETE',
+        body: JSON.stringify(ingredient),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'same-origin'
+    })
+    .then(response => {
+        if(response.ok){
+            return response;
+        }
+        else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText)
+            error.response = response;
+            throw error;
+        }
+    },
+    error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => response.json())
+    .then(response => dispatch(removeIngredient(ingredient)))
+    .catch(error => { console.log('Add Ingredient ', error.message)
+    alert('Your ingredient could not be added\nError: ' + error.message)})
+}
 
 export const addIngredient = (payload) => ({
     type: ActionTypes.ADD_INGREDIENT,
     payload:payload
 });
+
+export const removeIngredient = (payload) =>({
+    type: ActionTypes.REMOVE_INGREDIENT,
+    payload:payload
+});
+
+export const updateIngredient = (payload) => ({
+    type: ActionTypes.UPDATE_INGREDIENT,
+    payload:payload
+});
+
 
 export const fetchFoodTags = () => (dispatch) => {
 

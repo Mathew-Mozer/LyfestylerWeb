@@ -1,6 +1,5 @@
 
 import * as ActionTypes from './ActionTypes';
-import { compareByName } from '../shared/sortTools'
 
 export const Ingredients = (state= {
         isLoading: true,
@@ -9,11 +8,15 @@ export const Ingredients = (state= {
     }, action) => {
     switch(action.type){
         case ActionTypes.ADD_INGREDIENTS:
-            return{...state, isLoading:false, errMess:null,ingredients: action.payload.sort(compareByName)}
+            return{...state, isLoading:false, errMess:null,ingredients: action.payload}
         case ActionTypes.ADD_INGREDIENT:
-            return{...state, isLoading:false, errMess:null,ingredients: state.ingredients.concat(action.payload).sort(compareByName)}
+            return{...state, isLoading:false, errMess:null,ingredients: state.ingredients.concat(action.payload)}
+        case ActionTypes.UPDATE_INGREDIENT:
+            return{...state, isLoading:false, errMess:null,ingredients: state.ingredients.map((itm)=>{if(itm.id==action.payload.id){return(action.payload)}return(itm)})}
+        case ActionTypes.REMOVE_INGREDIENT:
+            return{...state, isLoading:false, errMess:null,ingredients: state.ingredients.filter((itm)=>{if(itm.id!=action.payload.id)return(itm)})}
         case ActionTypes.INGREDIENTS_LOADING:
-            return{...state, isLoading:true, errMess:null,ingredients: []}
+            return{...state, isLoading:true, errMess:null,ingredients:action.payload?[]:state.ingredients}
         case ActionTypes.INGREDIENTS_FAILED:
             return{...state, isLoading:false, errMess:action.payload,ingredients: []}
         default:
