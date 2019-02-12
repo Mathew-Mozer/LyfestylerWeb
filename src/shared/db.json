@@ -1,0 +1,657 @@
+{
+  "diets": [
+    {
+      "id": 0,
+      "name": "Strict Keto",
+      "restrictions": [
+        {
+          "name": "Grains",
+          "carbMax": 28
+        },
+        {
+          "name": "Potatoes",
+          "carbMax": 17
+        }
+      ]
+    }
+  ],
+  "items": [
+    {
+      "id": 0,
+      "UPC": "493",
+      "Name": "Bertoli Pasta",
+      "Nutrition": {
+        "SatFat": {
+          "units": 5,
+          "measure": "g"
+        },
+        "Cholest": {
+          "units": 40,
+          "measure": "mg"
+        },
+        "Sodium": {
+          "units": 410,
+          "measure": "mg"
+        },
+        "TotalCarb": {
+          "units": 2,
+          "measure": "g"
+        },
+        "Fiber": {
+          "units": 0,
+          "measure": "g"
+        },
+        "Sugar": {
+          "units": ".5",
+          "measure": "g"
+        },
+        "Protein": {
+          "units": 2,
+          "measure": "g"
+        }
+      }
+    }
+  ],
+  "ingredients": [
+    {
+      "name": "Coconut Aminos",
+      "tags": [
+        1,
+        0,
+        43,
+        40
+      ],
+      "id": 4
+    },
+    {
+      "name": "Cottage cheese",
+      "tags": [
+        4,
+        8
+      ],
+      "id": 5
+    },
+    {
+      "name": "Wheat",
+      "tags": [],
+      "id": 6
+    },
+    {
+      "name": "Corn",
+      "tags": [
+        45
+      ],
+      "id": 7
+    },
+    {
+      "name": "Rice",
+      "tags": [
+        45
+      ],
+      "id": 8
+    },
+    {
+      "name": "Granola",
+      "tags": [],
+      "id": 9
+    },
+    {
+      "name": "Sugar",
+      "tags": [
+        44
+      ],
+      "id": 10
+    },
+    {
+      "name": "Honey",
+      "tags": [
+        44
+      ],
+      "id": 11
+    },
+    {
+      "name": "Agave Syrup",
+      "tags": [
+        44,
+        97
+      ],
+      "id": 12
+    },
+    {
+      "name": "Maple Syrup",
+      "tags": [],
+      "id": 13
+    },
+    {
+      "name": "Apple",
+      "tags": [
+        41
+      ],
+      "id": 14
+    },
+    {
+      "name": "Banana",
+      "tags": [],
+      "id": 15
+    },
+    {
+      "name": "Orange",
+      "tags": [
+        41
+      ],
+      "id": 16
+    },
+    {
+      "name": "White Potato",
+      "tags": [
+        48
+      ],
+      "id": 17
+    },
+    {
+      "name": "Yam",
+      "tags": [],
+      "id": 18
+    },
+    {
+      "name": "Beef",
+      "tags": [],
+      "id": 19
+    },
+    {
+      "name": "Lamb",
+      "tags": [
+        38
+      ],
+      "id": 20
+    },
+    {
+      "name": "Chicken",
+      "tags": [],
+      "id": 21
+    },
+    {
+      "name": "Egg",
+      "tags": [],
+      "id": 22
+    },
+    {
+      "name": "Spinach",
+      "tags": [
+        39
+      ],
+      "id": 23
+    },
+    {
+      "name": "Kale",
+      "tags": [],
+      "id": 24
+    },
+    {
+      "name": "Broccoli",
+      "tags": [
+        39
+      ],
+      "id": 25
+    },
+    {
+      "name": "Macadamian Nut ",
+      "tags": [],
+      "id": 26
+    },
+    {
+      "name": "Walnut",
+      "tags": [],
+      "id": 27
+    },
+    {
+      "name": "Sunflower Seed",
+      "tags": [],
+      "id": 28
+    },
+    {
+      "name": "Avocado",
+      "tags": [
+        41
+      ],
+      "id": 29
+    },
+    {
+      "name": "Raspberry",
+      "tags": [
+        41
+      ],
+      "id": 30
+    },
+    {
+      "name": "Blackberry",
+      "tags": [
+        12,
+        56,
+        14,
+        93
+      ],
+      "id": 31
+    },
+    {
+      "name": "Stevia",
+      "tags": [],
+      "id": 32
+    },
+    {
+      "name": "Erythritol",
+      "tags": [],
+      "id": 33
+    },
+    {
+      "name": "Monk Fruit",
+      "tags": [],
+      "id": 34
+    },
+    {
+      "name": "Coconut Oil",
+      "tags": [],
+      "id": 35
+    },
+    {
+      "name": "Avocado Oil",
+      "tags": [
+        29
+      ],
+      "id": 36
+    },
+    {
+      "name": "Olive Oil",
+      "tags": [],
+      "id": 37
+    },
+    {
+      "name": "Meat",
+      "tags": [],
+      "id": 38
+    },
+    {
+      "name": "Vegetable",
+      "tags": [],
+      "id": 39
+    },
+    {
+      "name": "Fermented",
+      "tags": [],
+      "id": 40
+    },
+    {
+      "name": "Fruit",
+      "tags": [],
+      "id": 41
+    },
+    {
+      "name": "Coconut",
+      "tags": [],
+      "id": 43
+    },
+    {
+      "name": "Sweetener",
+      "tags": [],
+      "id": 44
+    },
+    {
+      "name": "Grain",
+      "tags": [],
+      "id": 45
+    },
+    {
+      "name": "Nut",
+      "tags": [],
+      "id": 46
+    },
+    {
+      "name": "Tree Nut",
+      "tags": [],
+      "id": 47
+    },
+    {
+      "name": "Nightshade",
+      "tags": [],
+      "id": 48
+    },
+    {
+      "name": "Tomato",
+      "tags": [],
+      "id": 49
+    },
+    {
+      "name": "Eggplant",
+      "tags": [
+        48
+      ],
+      "id": 50
+    },
+    {
+      "name": "Bell Pepper",
+      "tags": [
+        39,
+        48
+      ],
+      "id": 51
+    },
+    {
+      "name": "Cayenne Pepper",
+      "tags": [
+        39
+      ],
+      "id": 52
+    },
+    {
+      "name": "Paprika",
+      "tags": [
+        48
+      ],
+      "id": 53
+    },
+    {
+      "name": "Salmon",
+      "tags": [],
+      "id": 54
+    },
+    {
+      "name": "Oyster",
+      "tags": [],
+      "id": 55
+    },
+    {
+      "name": "Almond",
+      "tags": [
+        46
+      ],
+      "id": 56
+    },
+    {
+      "name": "Sunflower",
+      "tags": [],
+      "id": 57
+    },
+    {
+      "name": "Lamb",
+      "tags": [],
+      "id": 58
+    },
+    {
+      "name": "Watermelon",
+      "tags": [],
+      "id": 59
+    },
+    {
+      "name": "Sardines",
+      "tags": [],
+      "id": 60
+    },
+    {
+      "name": "Garlic",
+      "tags": [],
+      "id": 61
+    },
+    {
+      "name": "Asparagas",
+      "tags": [
+        39
+      ],
+      "id": 62
+    },
+    {
+      "name": "Black Olives",
+      "tags": [],
+      "id": 63
+    },
+    {
+      "name": "Broccoli",
+      "tags": [],
+      "id": 64
+    },
+    {
+      "name": "Cabbage",
+      "tags": [],
+      "id": 65
+    },
+    {
+      "name": "Cauliflower",
+      "tags": [],
+      "id": 66
+    },
+    {
+      "name": "Celery",
+      "tags": [],
+      "id": 67
+    },
+    {
+      "name": "Green Bean",
+      "tags": [],
+      "id": 68
+    },
+    {
+      "name": "Kidney Bean",
+      "tags": [],
+      "id": 69
+    },
+    {
+      "name": "Lentil",
+      "tags": [],
+      "id": 70
+    },
+    {
+      "name": "Lettuce",
+      "tags": [],
+      "id": 71
+    },
+    {
+      "name": "Lima Bean",
+      "tags": [],
+      "id": 72
+    },
+    {
+      "name": "Onion",
+      "tags": [],
+      "id": 73
+    },
+    {
+      "name": "Pea",
+      "tags": [],
+      "id": 74
+    },
+    {
+      "name": "Pumpkin",
+      "tags": [],
+      "id": 75
+    },
+    {
+      "name": "Soybean",
+      "tags": [],
+      "id": 76
+    },
+    {
+      "name": "Apricot",
+      "tags": [
+        41
+      ],
+      "id": 77
+    },
+    {
+      "name": "Blueberry",
+      "tags": [],
+      "id": 78
+    },
+    {
+      "name": "Cranberry",
+      "tags": [],
+      "id": 79
+    },
+    {
+      "name": "Grapefruit",
+      "tags": [],
+      "id": 80
+    },
+    {
+      "name": "Lemon",
+      "tags": [],
+      "id": 81
+    },
+    {
+      "name": "Papaya",
+      "tags": [],
+      "id": 82
+    },
+    {
+      "name": "Peach",
+      "tags": [],
+      "id": 83
+    },
+    {
+      "name": "Pear",
+      "tags": [],
+      "id": 84
+    },
+    {
+      "name": "Pineapple",
+      "tags": [],
+      "id": 85
+    },
+    {
+      "name": "Plum",
+      "tags": [],
+      "id": 86
+    },
+    {
+      "name": "Raspberry",
+      "tags": [],
+      "id": 87
+    },
+    {
+      "name": "Red Grape",
+      "tags": [],
+      "id": 88
+    },
+    {
+      "name": "Strawberry",
+      "tags": [],
+      "id": 89
+    },
+    {
+      "name": "Baker's Yeast",
+      "tags": [],
+      "id": 90
+    },
+    {
+      "name": "Brewer's Yeast",
+      "tags": [],
+      "id": 91
+    },
+    {
+      "name": "Yeast",
+      "tags": [],
+      "id": 92
+    },
+    {
+      "name": "Cane Sugar",
+      "tags": [],
+      "id": 93
+    },
+    {
+      "name": "Coffee",
+      "tags": [],
+      "id": 94
+    },
+    {
+      "name": "Xanthan Gum",
+      "tags": [],
+      "id": 95
+    },
+    {
+      "name": "Berry",
+      "tags": [],
+      "id": 96
+    },
+    {
+      "name": "Agave",
+      "tags": [
+        41
+      ],
+      "id": 97
+    },
+    {
+      "name": "Oats",
+      "tags": [
+        45
+      ],
+      "id": 98
+    },
+    {
+      "name": "Oat Meal",
+      "tags": [
+        98
+      ],
+      "id": 99
+    }
+  ],
+  "foodTags": [
+    {
+      "id": 0,
+      "name": "Grain"
+    },
+    {
+      "name": "Fruit",
+      "id": 1
+    },
+    {
+      "name": "Vegetable",
+      "id": 2
+    },
+    {
+      "name": "Legume",
+      "id": 3
+    },
+    {
+      "name": "Dairy",
+      "id": 4
+    },
+    {
+      "name": "Meat",
+      "id": 5
+    },
+    {
+      "name": "Herb",
+      "id": 6
+    },
+    {
+      "name": "Spice",
+      "id": 7
+    },
+    {
+      "name": "Fermented",
+      "id": 8
+    },
+    {
+      "name": "Tree Nut",
+      "id": 9
+    },
+    {
+      "name": "Soy",
+      "id": 10
+    },
+    {
+      "name": "Shell Fish",
+      "id": 11
+    },
+    {
+      "name": "Fish",
+      "id": 12
+    },
+    {
+      "name": "Seed",
+      "id": 13
+    },
+    {
+      "name": "Gelatin",
+      "id": 14
+    }
+  ]
+}

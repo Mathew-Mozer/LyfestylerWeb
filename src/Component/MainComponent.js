@@ -9,6 +9,7 @@ import {Diets,Items} from '../shared/data';
 import ItemViewer from './ItemViewComponent';
 import IngredientViewer from './IngredientViewComponent'
 import { actions } from 'react-redux-form';
+import DietEdit from './DietEditComponent';
 
 const mapStateToProps = state => {
     return {
@@ -49,6 +50,7 @@ class Main extends Component {
                 <Switch>
                     <Route path="/home" render={()=><Home/>} />
                     <Route exact path="/ingredients" render={()=><IngredientViewer editIngredient={this.props.editIngredient} deleteIngredient={this.props.deleteIngredient} postIngredient={this.props.postIngredient} putIngredient={this.props.putIngredient} foodTags={this.props.foodTags} resetAddIngredientForm={this.props.resetAddIngredientForm} ingredients={this.props.ingredients} />} />
+                    <Route exact path="/dietedit" render={()=><DietEdit editIngredient={this.props.editIngredient} deleteIngredient={this.props.deleteIngredient} postIngredient={this.props.postIngredient} putIngredient={this.props.putIngredient} foodTags={this.props.foodTags} resetAddIngredientForm={this.props.resetAddIngredientForm} ingredients={this.props.ingredients} />} />
                     <Route path="/woe/:dietId" component={DietWithId}/>            
                     <Route path="/scan/:upc" component={scanItem}/>            
                     <Redirect to="/home" />

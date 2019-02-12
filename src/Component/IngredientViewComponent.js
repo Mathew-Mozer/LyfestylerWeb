@@ -68,7 +68,7 @@ class IngredientView extends Component {
         return (
             <Container fluid>
                 <Row>
-                    <Col className="border border-info rounded Add-Gutter" sm={12} md={{ size: 5, offset: 1 }} >
+                    <Col className="border border-info rounded Add-Gutter" sm={4} md={{ size: 2, offset: 1 }} >
                         <Row>
                             <Col>
                                 <label for="exampleInputEmail1">Ingredients</label>
@@ -82,7 +82,7 @@ class IngredientView extends Component {
                             <Col><FoodIngredientItems filterParam={this.state.ingredientSearch} resetForm={() => this.props.resetAddIngredientForm()} deleteIngredient={(ing) => this.props.deleteIngredient(ing)} editIngredient={(ing) => this.editIngredient(ing)} ingredients={this.props.ingredients.ingredients} isLoading={this.props.ingredients.isLoading} errMess={this.props.ingredients.errMess} /></Col>
                         </Row>
                     </Col>
-                    <Col className="border border-info rounded Add-Gutter" sm={12} md={{ size: 5 }} >
+                    <Col className="border border-info rounded Add-Gutter" sm={7} md={{ size: 8 }} >
                         <div>{isUpdating ? "Update" : "New"} Ingredient</div>
                         <Form model="addIngredient" onSubmit={(values) => this.handleAddIngredientSubmit(values)}>
                             <Row className="form-group">
@@ -108,12 +108,6 @@ class IngredientView extends Component {
                                 </Col>
                             </Row>
                             <Row>
-                                <Col className="text-center">
-                                    <Button color="primary">{isUpdating ? 'Update' : 'Add'}</Button><Button onClick={() => this.props.resetAddIngredientForm()} type="button" color="danger">Clear</Button>
-                                    {isUpdating ? <Button onClick={() => this.clickAsNewItem()} type="button" color="success">As New</Button> : <></>}
-                                </Col>
-                            </Row>
-                            <Row>
                                 <Col>Ingredient Tags(Solid=Added)</Col>
                             </Row>
                             <Row>
@@ -134,7 +128,12 @@ class IngredientView extends Component {
                                     })}
                                 </Col>
                             </Row>
-
+                            <Row>
+                                <Col className="text-center">
+                                    <Button color="primary">{isUpdating ? 'Update' : 'Add'}</Button><Button onClick={() => this.props.resetAddIngredientForm()} type="button" color="danger">Clear</Button>
+                                    {isUpdating ? <Button onClick={() => this.clickAsNewItem()} type="button" color="success">Copy To New</Button> : <></>}
+                                </Col>
+                            </Row>
                         </Form>
                     </Col>
                 </Row>
