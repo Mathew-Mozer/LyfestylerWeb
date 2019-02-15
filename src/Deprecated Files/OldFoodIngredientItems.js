@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Container,Row,Col }  from 'reactstrap'
 import Chip from '@material-ui/core/Chip';
 import { compareByName } from '../shared/sortTools'
-import ConfirmDialog from './ConfirmDialog'
+import ConfirmDialog from '../Component/ConfirmDialog'
 
 export default class FoodIngredientItems extends Component {
     state={

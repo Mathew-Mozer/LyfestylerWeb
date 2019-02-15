@@ -3,17 +3,14 @@ import Home from './HomeComponent';
 import Header from './HeaderComponent';
 import WoeViewer from './WOEViewer'
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
-import { fetchDiets, fetchItems,fetchIngredients,postIngredient,fetchFoodTags,putIngredient,deleteIngredient } from '../redux/ActionCreators'
+import { fetchLyfeStyles, fetchItems,fetchIngredients,postIngredient,fetchFoodTags,putIngredient,deleteIngredient, putLyfeStyle,postLyfeStyle } from '../redux/ActionCreators'
 import { connect } from 'react-redux';
-import {Diets,Items} from '../shared/data';
 import ItemViewer from './ItemViewComponent';
-import IngredientViewer from './IngredientViewComponent'
-import { actions } from 'react-redux-form';
-import DietEdit from './DietEditComponent';
+import LyfeStyleEdit from './LyfeStyleEditComponent';
 
 const mapStateToProps = state => {
     return {
-      diets: state.diets,
+      lyfestyles: state.lyfestyles,
       items: state.items,
       ingredients: state.ingredients,
       foodTags: state.foodTags
@@ -23,35 +20,35 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch) => ({
     postIngredient: (id,name,tags) => dispatch(postIngredient(id,name,tags)),
     putIngredient: (ingredient) => dispatch(putIngredient(ingredient)),
+    putLyfeStyle: (lyfestyle) => dispatch(putLyfeStyle(lyfestyle)),
+    postLyfeStyle: (lyfestyle) => dispatch(postLyfeStyle(lyfestyle)),
     deleteIngredient: (ingredient) => dispatch(deleteIngredient(ingredient)),
-    fetchDiets: () => {dispatch(fetchDiets())},
+    fetchLyfeStyles: () => {dispatch(fetchLyfeStyles())},
     fetchItems: () => {dispatch(fetchItems())},
     fetchIngredients: () => {dispatch(fetchIngredients())},
-    fetchFoodTags: () => {dispatch(fetchFoodTags())},
-    resetAddIngredientForm: () => { dispatch(actions.reset('addIngredient'))}
+    fetchFoodTags: () => {dispatch(fetchFoodTags())}
   })
 
 class Main extends Component {
 
     componentDidMount(){
-        this.props.fetchDiets();
+        this.props.fetchLyfeStyles();
         this.props.fetchItems();
         this.props.fetchIngredients();
         this.props.fetchFoodTags();
       }
     render() {
 
-        const DietWithId = ({match}) => <WoeViewer diet={Diets.filter((diet) => diet.id===parseInt(match.params.dietId,10))[0]}/>
-        const scanItem = ({match}) => <ItemViewer item={Items.filter((item) => item.UPC==parseInt(match.params.upc,10))[0]}/>
+        const LyfeStyleWithId = ({match}) => <WoeViewer LyfeStyle={this.props.LyfeStyles.filter((LyfeStyle) => LyfeStyle.id===parseInt(match.params.LyfeStyleId,10))[0]}/>
+        const scanItem = ({match}) => <ItemViewer item={this.props.LyfeStyle.filter((item) => item.UPC==parseInt(match.params.upc,10))[0]}/>
 
         return (
             <div>
-                <Header diets={Diets}/>
+                <Header/>
                 <Switch>
-                    <Route path="/home" render={()=><Home/>} />
-                    <Route exact path="/ingredients" render={()=><IngredientViewer editIngredient={this.props.editIngredient} deleteIngredient={this.props.deleteIngredient} postIngredient={this.props.postIngredient} putIngredient={this.props.putIngredient} foodTags={this.props.foodTags} resetAddIngredientForm={this.props.resetAddIngredientForm} ingredients={this.props.ingredients} />} />
-                    <Route exact path="/dietedit" render={()=><DietEdit editIngredient={this.props.editIngredient} deleteIngredient={this.props.deleteIngredient} postIngredient={this.props.postIngredient} putIngredient={this.props.putIngredient} foodTags={this.props.foodTags} resetAddIngredientForm={this.props.resetAddIngredientForm} ingredients={this.props.ingredients} />} />
-                    <Route path="/woe/:dietId" component={DietWithId}/>            
+                    <Route path="/home" render={()=><Home lyfestyles={this.props.lyfestyles} ingredients={this.props.ingredients}/>} />
+                    <Route exact path="/lyfestyleedit" render={()=><LyfeStyleEdit editLyfeStyle={this.props.editLyfeStyle} deleteLyfeStyle={this.props.deleteLyfeStyle} postLyfeStyle={this.props.postLyfeStyle} putLyfeStyle={this.props.putLyfeStyle} ingredients={this.props.ingredients} />} />
+                    <Route path="/woe/:LyfeStyleId" component={LyfeStyleWithId}/>            
                     <Route path="/scan/:upc" component={scanItem}/>            
                     <Redirect to="/home" />
                 </Switch>

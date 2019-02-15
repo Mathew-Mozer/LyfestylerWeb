@@ -7,21 +7,21 @@ import InputBase from '@material-ui/core/InputBase';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom'
+import SignInModal from './Modals/SignInModal'
 //import SearchIcon from '@material-ui/icons/Search';
 
 
 function Header(props) {
   const { classes } = props;
-  const { diets } = props;
-  
+    
   return (
     <div className={classes.root}>
+    
       <AppBar position="static">
         <Toolbar>
-
         <Link style={{color:'white',textDecoration:'none'}} to={`/home`} >
           <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-          Diet App
+          LyfeStyler
           </Typography>
           </Link>
           <div className={classes.grow} />
@@ -37,6 +37,7 @@ function Header(props) {
               }}
             />
           </div>
+          <SignInModal/>
         </Toolbar>
       </AppBar>
     </div>

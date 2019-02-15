@@ -1,6 +1,6 @@
 import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../shared/baseUrl'
-import firebase from './Firebase/firebase'
+import { actions } from 'react-redux-form'
 
 export const lyfeStylesFailed = (errmess) => ({
     type: ActionTypes.LYFESTYLES_FAILED,
@@ -17,23 +17,27 @@ export const lyfeStylesLoading = () => ({
 });
 
 export const fetchLyfeStyles = () => (dispatch) => {
-    let ls = firebase.firestore().collection("lyfestyles")
-    let lyfestyles=[];
-    ls.get().then(snapshot => {
-    snapshot.forEach(doc => {
-        let ls = {
-            id:doc.id,
-            ...doc.data()
-        }
-        lyfestyles.push(ls)
-        //console.log(doc.id, '=>', doc.data());
-        console.log("data",JSON.stringify(lyfestyles))
-    });
-    return(lyfestyles)
-  }).then(payload => dispatch(addLyfeStyles(payload)))
-  .catch(error => dispatch(lyfeStylesFailed(error.message)));
-}
+    dispatch(lyfeStylesLoading(true));
 
+    return fetch(baseUrl+'lyfeStyles')
+        .then(response => {
+            if(response.ok){
+                return response;
+            }
+            else {
+                var error = new Error('Error ' + response.status + ': ' + response.statusText)
+                error.response = response;
+                throw error;
+            }
+        },
+        error => {
+            var errmess = new Error(error.message);
+            throw errmess;
+        })
+        .then(response => response.json())
+        .then(payload => dispatch(addLyfeStyles(payload)))
+        .catch(error => dispatch(lyfeStylesFailed(error.message)));
+}
 
 
 export const itemsFailed = (errmess) => ({
@@ -248,14 +252,3 @@ export const addFoodTags = (payload) => ({
     type: ActionTypes.ADD_FOODTAGS,
     payload:payload
 });
-
-export const postLyfeStyle = (payload) =>{
-   firebase.firestore().collection("lyfestyles").doc().set(payload)
-   .then(console.log("document written"))
-   .catch(error=> console.log("Error:",error))
-}
-export const putLyfeStyle = (payload) =>{
-    firebase.firestore().collection("lyfestyles").doc().set(payload)
-    .then(()=>console.log("document changed:"))
-    .catch(error=> console.log("Error:",error))
- }

@@ -1,6 +1,6 @@
-export const ADD_DIETS = 'ADD_DIETS';
-export const DIETS_LOADING = 'DIETS_LOADING';
-export const DIETS_FAILED = 'DIETS_FAILED';
+export const ADD_LYFESTYLES = 'ADD_LYFESTYLES';
+export const LYFESTYLES_LOADING = 'LYFESTYLES_LOADING';
+export const LYFESTYLES_FAILED = 'LYFESTYLES_FAILED';
 
 export const ADD_ITEMS = 'ADD_ITEMS';
 export const ITEMS_LOADING = 'ITEMS_LOADING';

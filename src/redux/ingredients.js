@@ -12,9 +12,9 @@ export const Ingredients = (state= {
         case ActionTypes.ADD_INGREDIENT:
             return{...state, isLoading:false, errMess:null,ingredients: state.ingredients.concat(action.payload)}
         case ActionTypes.UPDATE_INGREDIENT:
-            return{...state, isLoading:false, errMess:null,ingredients: state.ingredients.map((itm)=>{if(itm.id==action.payload.id){return(action.payload)}return(itm)})}
+            return{...state, isLoading:false, errMess:null,ingredients: state.ingredients.map((itm)=>{if(itm.id===action.payload.id){return(action.payload)}return(itm)})}
         case ActionTypes.REMOVE_INGREDIENT:
-            return{...state, isLoading:false, errMess:null,ingredients: state.ingredients.filter((itm)=>{if(itm.id!=action.payload.id)return(itm)})}
+            return{...state, isLoading:false, errMess:null,ingredients: state.ingredients.filter((itm)=>{if(itm.id!==action.payload.id)return(itm);return(false)})}
         case ActionTypes.INGREDIENTS_LOADING:
             return{...state, isLoading:true, errMess:null,ingredients:action.payload?[]:state.ingredients}
         case ActionTypes.INGREDIENTS_FAILED:

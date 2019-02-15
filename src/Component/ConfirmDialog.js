@@ -7,17 +7,25 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 class ConfirmDialog extends React.Component {
+   state={
+     isOpen:false,
+     stateChangeItem:null
+   }
    
-  handleClose = (close) => {
-    this.props.handleAlertClose(close)
-  };
+   
+  static getDerivedStateFromProps(nextProps, prevState){
+    if(nextProps.openOnStateChange!==prevState.stateChangeItem){
+      return { stateChangeItem: nextProps.openOnStateChange,isOpen:nextProps.openOnStateChange.id?true:false};
+   }
+   else return null;
+ }
 
   render() {
     return (
       <>
         <Dialog
-          open={this.props.isOpen}
-          onClose={()=>this.handleClose(false)}
+          open={this.state.isOpen}
+          onClose={()=>this.props.handleAlertClose(false)}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
@@ -28,10 +36,10 @@ class ConfirmDialog extends React.Component {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={()=>this.handleClose(false)} color={this.props.disAgreeColor}>
+            <Button onClick={()=>this.props.handleAlertClose(false)} color={this.props.disAgreeColor}>
               {this.props.disagree}
             </Button>
-            <Button onClick={()=>this.handleClose(true)} color={this.props.agreeColor} autoFocus>
+            <Button onClick={()=>this.props.handleAlertClose(true)} color={this.props.agreeColor} autoFocus>
               {this.props.agree}
             </Button>
           </DialogActions>
