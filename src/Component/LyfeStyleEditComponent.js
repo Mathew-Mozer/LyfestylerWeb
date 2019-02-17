@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Col, Row, Container, Label } from 'reactstrap'
+import { Col, Row, Container, Label,Button } from 'reactstrap'
 import { Control, Form, Errors, actions, Field } from 'react-redux-form';
 import { connect } from 'react-redux';
 import FoodIngredientList from './FoodIngredientList'
@@ -16,7 +16,8 @@ class LyfeStyleEdit extends Component {
     state = {
         ingredientSearch: "",
         selectedItem: null,
-        isPublic: false
+        isPublic: false,
+        isUpdating:false
     }
     isIngredientAdded = ({ id }) => this.props.formLyfeStyleEditor.restrictions ? this.props.formLyfeStyleEditor.restrictions.some((tagg) => tagg.id === id) ? true : false : false
     handleformLyfeStyleEditor(values) {
@@ -26,16 +27,23 @@ class LyfeStyleEdit extends Component {
         history.push({ pathname: `/home` });
     }
     static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps.formLyfeStyleEditor.public) {
-            return { isPublic: true }
-        }
-        else return null;
+        return{ isPublic:nextProps.formLyfeStyleEditor.public?true:false,isUpdating:nextProps.formLyfeStyleEditor.id?true:false}
+        
     }
 
     handleAddIngredient = ingredient => {
         if (!this.isIngredientAdded(ingredient)) {
             this.props.dispatch(actions.push('formLyfeStyleEditor.restrictions', ingredient))
         } else {
+        }
+    }
+    handleDelete = ingredient => {
+        //console.log("Delete Clicked",)
+        if (this.isIngredientAdded(ingredient)) {
+            this.props.dispatch(actions.remove('formLyfeStyleEditor.restrictions', this.props.formLyfeStyleEditor.restrictions.findIndex((item)=>item.id===ingredient.id)))
+            console.log("attempting to delete2")
+        } else {
+            console.log("attempting to delete")
         }
     }
 
@@ -60,8 +68,9 @@ class LyfeStyleEdit extends Component {
                     <Col className="border border-info rounded Add-Gutter" style={{ padding: "10px 0px 10px 0px" }} sm={4} md={{ size: 5 }} >
                         <Form model="formLyfeStyleEditor" onSubmit={(values) => this.handleformLyfeStyleEditor(values)}>
                             <Row className="form-group">
-                                <Label htmlFor="name" md={2}>Name</Label>
+                                
                                 <Col md={10}>
+                                    <Label htmlFor="name" md={2}>Name</Label>
                                     <Control.text model=".name" id="name" name="name"
                                         placeholder="LyfeStyle Name"
                                         className="form-control"
@@ -93,10 +102,13 @@ class LyfeStyleEdit extends Component {
                                 <Col md="12" >Restrictions:</Col>
                                 <Col style={{ overflow: "auto", maxHeight: "200px" }}>
                                     {this.props.formLyfeStyleEditor.restrictions ? this.props.formLyfeStyleEditor.restrictions.map(restriction => {
-                                        return (<Chip key={restriction.id} label={restriction.name} />)
+                                        return (<Chip key={restriction.id} label={restriction.name} onDelete={()=>this.handleDelete(restriction)} />)
                                     })
                                         : <></>}
                                 </Col>
+                            </Row>
+                            <Row>
+                                <Button color="primary" type="submit">{this.state.isUpdating ? 'Update' : 'Add'}</Button>
                             </Row>
                         </Form>
                     </Col>

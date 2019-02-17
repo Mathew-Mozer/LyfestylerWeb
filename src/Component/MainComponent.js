@@ -35,12 +35,13 @@ class Main extends Component {
             if(authUser){
                 this.setState({ authUser })
                 this.props.fetchLyfeStyles();
+                if(firebase.auth().currentUser)
+                this.props.fetchIngredients();
             }else{
                 this.setState({ authUser: null })
             }
         })
-        if(firebase.auth().currentUser)
-        this.props.fetchIngredients();
+        
       }
     render() {
 

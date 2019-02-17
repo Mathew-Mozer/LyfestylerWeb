@@ -59,8 +59,8 @@ class Home extends Component {
                 <Container fluid>
                     <Row style={{margin:"5px"}}>
                         <Col className="border border-info rounded TileBorder" xs={{size:12,order:2}} md={{ size: 6,order:0 }} >
-                            <Row><h2>My Lyfestyles</h2></Row>
-                            <Row><List style={{ width: "100%",maxHeight: 250, overflow: 'auto'}}>
+                            <Row><Col><h2>My Lyfestyles</h2></Col></Row>
+                            <Row><Col><List style={{ width: "100%",maxHeight: 250, overflow: 'auto'}}>
                                {!this.props.lyfestyles.isLoading?(
                                 this.props.lyfestyles.lyfestyles.filter(itm=>!itm.managed).map((item) => {
                                     return (<LyfeStyleListItemComponent activeToggle editButton key={item.id} ItemDetails={item} expandedItem={this.state.expandedItem} onExpand={(itemId) => this.setState({ expandedItem: itemId })} />)
@@ -68,6 +68,7 @@ class Home extends Component {
                                    <div>Loading</div>     
                                 )}
                             </List>
+                            </Col>
                             </Row>
                         </Col>
                         <Col className="border border-info rounded TileBorder" xs={{size:12,order:0}} md={{ size: 6,order:1 }}>
@@ -76,12 +77,13 @@ class Home extends Component {
                             
                         </Col>
                         <Col className="border border-info rounded TileBorder" xs={{size:12,order:2}} md={{ size: 6,order:2 }} >
-                            <Row><h2>Public LyfeStyles</h2></Row>
-                            <Row><List style={{ width: "100%",maxHeight: 250, overflow: 'auto'}}>
+                            <Row><Col><h2>Public LyfeStyles</h2></Col></Row>
+                            <Row><Col><List style={{ width: "100%",maxHeight: 250, overflow: 'auto'}}>
                                     {this.state.lyfestyles.map((item)=>{
                                         return(<LyfeStyleListItemComponent subscribeButton key={item.id} ItemDetails={item}/>)
                                     })}
                             </List>
+                            </Col>
                             </Row>
                         </Col>
                     </Row>

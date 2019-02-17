@@ -47,7 +47,7 @@ class IngredientModal extends React.Component {
 }
 
 removeTag(tag) {
-    this.props.dispatch(actions.remove('addIngredient.tags', this.props.addIngredient.tags.findIndex((tagg) => tagg.id === tag.id)))
+    this.props.dispatch(actions.remove('addIngredient.tags', this.props.addIngredient.tags.findIndex((tagg) => tagg === tag.id)))
 }
 
 addTag(tag) {
@@ -80,6 +80,7 @@ handleSubmit(){
         .catch(error => console.log("Error:", error))
           this.toggle();
           this.props.dispatch(fetchIngredients())
+          this.resetAddIngredientForm();
 }
   handleChipClick(tag) {
     const taglist = this.props.addIngredient.tags;
@@ -138,7 +139,7 @@ handleSubmit(){
                                 <Col>
 
                                     <InputGroup style={{ marginBottom: "5px" }}>
-                                        <Input onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} value={this.state.tagSearch} onChange={(param) => this.setState({ tagSearch: param.target.value })} aria-describedby="emailHelp" placeholder="Ingredient Tag Search" />
+                                        <Input onKeyPress={(e) => {e.key === 'Enter' && e.preventDefault(); }} value={this.state.tagSearch} onChange={(param) => this.setState({ tagSearch: param.target.value })} aria-describedby="emailHelp" placeholder="Ingredient Tag Search" />
                                         <InputGroupAddon addonType="append"><Button onClick={() => this.setState({ tagSearch: "" })} color="danger">X</Button></InputGroupAddon>
                                     </InputGroup>
                                 </Col>
