@@ -2,7 +2,9 @@ import React from 'react';
 import { Container, Row, Col, Label, InputGroup, InputGroupAddon, Input, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Control, Form, Errors, actions,submit } from 'react-redux-form';
 import { connect } from 'react-redux';
+import firebase from '../../Firebase/firebase'
 import Chip from '@material-ui/core/Chip';
+import { fetchIngredients } from '../../redux/ActionCreators'
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len)
@@ -71,7 +73,13 @@ handleAddIngredientSubmit(values) {
 }
 handleSubmit(){
   console.log('Submitted!')
-  this.props.dispatch(actions.submit('addIngredient'))
+  //this.props.dispatch(actions.submit('addIngredient'))
+  var docRef=firebase.firestore().collection("ingredients")
+  var tmp=this.props.addIngredient.id?docRef.doc(this.props.addIngredient.id):docRef.doc()
+  tmp.set(this.props.addIngredient)
+        .catch(error => console.log("Error:", error))
+          this.toggle();
+          this.props.dispatch(fetchIngredients())
 }
   handleChipClick(tag) {
     const taglist = this.props.addIngredient.tags;
@@ -90,7 +98,7 @@ handleSubmit(){
   
   render() {
     const isTagAdded = ({id}) =>this.props.addIngredient.tags ? this.props.addIngredient.tags.some((tagg) => tagg === id) ? true : false : false
-    const isUpdating = this.props.addIngredient.id > -1 ? true : false
+    const isUpdating = this.props.addIngredient.id? true : false
     
     if(!this.props.ingredients.isLoading)
     return (
@@ -143,11 +151,12 @@ handleSubmit(){
                                     })}
                                 </Col>
                             </Row>
-                            <Row>
+                            <Row>{/* 
                                 <Col className="text-center">
                                     <Button color="primary">{isUpdating ? 'Update' : 'Add'}</Button><Button onClick={() => this.props.resetAddIngredientForm()} type="button" color="danger">Clear</Button>
                                     {isUpdating ? <Button onClick={() => this.clickAsNewItem()} type="button" color="success">Copy To New</Button> : <></>}
                                 </Col>
+                                */}
                             </Row>
                         </Form>
                         </Container>

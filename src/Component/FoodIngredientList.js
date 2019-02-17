@@ -36,29 +36,11 @@ class FoodIngredientList extends React.Component {
     })
   };
   
-  handleListItemClick = (ingredient) => {
-    this.props.onClick(ingredient)
-  }
-  getIngredientFromArray = (id) => {
-    return (this.props.ingredients.filter((ing) => ing.id === id)[0].name)
-  }
-  getTagList = (ingredient) => {
-    //const tmp=.map((item,index)=>(index?`,${()=>this.getIngredientFromArray(item)}`:()=>this.getIngredientFromArray(item)))
-    if (ingredient.length === 0)
-      return ("None")
-    const tmp = this.props.ingredients.ingredients.filter((ing) => ingredient.includes(ing.id)).map((item) => item.name).toString()
-    return (tmp)
-  }
-  deleteItem = (answer) => {
-    if (answer) {
-      //console.log("Delete:",this.state.selectedDeleteIngredient.name)
-      this.props.deleteIngredient(this.state.selectedDeleteIngredient)
-    } else {
-      console.log("Did Not Delete", this.state.selectedDeleteIngredient.name)
-    }
-    this.setState({ selectedDeleteIngredient: {} })
-    console.log("Answer", answer)
-  }
+  handleListItemClick = (ingredient) => this.props.onClick(ingredient)
+  getIngredientFromArray = (id) => this.props.ingredients.filter((ing) => ing.id === id)[0].name
+  getTagList = (ingredient) => ingredient?ingredient?this.props.ingredients.ingredients.filter((ing) => ingredient.includes(ing.id)).map((item) => item.name).toString():"":""
+  deleteItem = (answer) => answer?this.props.deleteIngredient(this.state.selectedDeleteIngredient):  this.setState({ selectedDeleteIngredient: {} })
+    
   render() {
     const { classes } = this.props;
 
@@ -79,7 +61,6 @@ class FoodIngredientList extends React.Component {
             <InputGroupAddon addonType="prepend"><IngredientModal ingredient={this.state.selectedEditIngredient} color="primary" buttonLabel={<span><AddCircle/></span>} postIngredient={this.props.postIngredient} putIngredient={this.props.putIngredient} ingredients={this.props.ingredients} /></InputGroupAddon>
               <Input value={this.state.filterParam} onChange={(param) => this.setState({ filterParam: param.target.value })} aria-describedby="emailHelp" placeholder="Ingredient Search" />
               <InputGroupAddon addonType="append"><Button onClick={() => this.setState({ filterParam: "" })} color="danger">X</Button></InputGroupAddon>
-              
             </InputGroup>
           </Row>
           <Row noGutters>

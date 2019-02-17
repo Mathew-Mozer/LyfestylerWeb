@@ -5,4 +5,5 @@ export const addIngredient = {
 export const formLyfeStyleEditor = {
     name: '',
     restrictions:[],
+    public:false
 }

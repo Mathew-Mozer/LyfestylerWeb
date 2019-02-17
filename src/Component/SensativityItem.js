@@ -1,0 +1,25 @@
+import React from 'react'
+import { Col, Row,Button } from 'reactstrap'
+
+export const SensativityItem = (ItemDetails) => {
+    const renderRow = (itemName,itemDetail) =>{
+        return(<Row style={{ paddingLeft: 25}}>
+            <Col>{itemName}</Col>
+            <Col>{itemDetail}</Col>
+        </Row>)
+    }
+
+    return (
+        <Col md={4}>
+            <Row className="border border-info rounded">
+                <Col xs={10} sm={9} md={10} lg={10}>
+                    {ItemDetails.name}
+                </Col>
+                <Col xs={10} sm={9} md={10} lg={10}>
+                    from:
+                </Col>
+
+            </Row>
+        </Col>
+    )
+}

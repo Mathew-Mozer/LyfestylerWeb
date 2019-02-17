@@ -3,10 +3,11 @@ import Home from './HomeComponent';
 import Header from './HeaderComponent';
 import WoeViewer from './WOEViewer'
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
-import { fetchLyfeStyles, fetchItems,fetchIngredients,postIngredient,fetchFoodTags,putIngredient,deleteIngredient, putLyfeStyle,postLyfeStyle } from '../redux/ActionCreators'
+import { fetchLyfeStyles, fetchItems,fetchIngredients,postIngredient,fetchFoodTags,putIngredient,deleteIngredient, addLyfeStyle,updateLyfeStyle } from '../redux/ActionCreators'
 import { connect } from 'react-redux';
 import ItemViewer from './ItemViewComponent';
 import LyfeStyleEdit from './LyfeStyleEditComponent';
+import firebase from '../Firebase/firebase'
 
 const mapStateToProps = state => {
     return {
@@ -20,8 +21,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch) => ({
     postIngredient: (id,name,tags) => dispatch(postIngredient(id,name,tags)),
     putIngredient: (ingredient) => dispatch(putIngredient(ingredient)),
-    putLyfeStyle: (lyfestyle) => dispatch(putLyfeStyle(lyfestyle)),
-    postLyfeStyle: (lyfestyle) => dispatch(postLyfeStyle(lyfestyle)),
+    addLyfeStyle: (lyfestyle) => dispatch(addLyfeStyle(lyfestyle)),
+    updateLyfeStyle: (lyfestyle) => dispatch(updateLyfeStyle(lyfestyle)),
     deleteIngredient: (ingredient) => dispatch(deleteIngredient(ingredient)),
     fetchLyfeStyles: () => {dispatch(fetchLyfeStyles())},
     fetchItems: () => {dispatch(fetchItems())},
@@ -32,7 +33,15 @@ const mapDispatchToProps = (dispatch) => ({
 class Main extends Component {
 
     componentDidMount(){
-        this.props.fetchLyfeStyles();
+        const userChanged = firebase.auth().onAuthStateChanged(authUser => {
+            if(authUser){
+                this.setState({ authUser })
+                this.props.fetchLyfeStyles();
+            }else{
+                this.setState({ authUser: null })
+            }
+        })
+        
         this.props.fetchItems();
         this.props.fetchIngredients();
         this.props.fetchFoodTags();
@@ -47,7 +56,7 @@ class Main extends Component {
                 <Header/>
                 <Switch>
                     <Route path="/home" render={()=><Home lyfestyles={this.props.lyfestyles} ingredients={this.props.ingredients}/>} />
-                    <Route exact path="/lyfestyleedit" render={()=><LyfeStyleEdit editLyfeStyle={this.props.editLyfeStyle} deleteLyfeStyle={this.props.deleteLyfeStyle} postLyfeStyle={this.props.postLyfeStyle} putLyfeStyle={this.props.putLyfeStyle} ingredients={this.props.ingredients} />} />
+                    <Route path="/lyfestyleedit/:LyfeStyleId" render={(props)=><LyfeStyleEdit {...props} editLyfeStyle={this.props.editLyfeStyle} deleteLyfeStyle={this.props.deleteLyfeStyle} postLyfeStyle={this.props.addLyfeStyle} putLyfeStyle={this.props.updateLyfeStyle} fetchIngredients="duh" ingredients={this.props.ingredients} />} />
                     <Route path="/woe/:LyfeStyleId" component={LyfeStyleWithId}/>            
                     <Route path="/scan/:upc" component={scanItem}/>            
                     <Redirect to="/home" />
