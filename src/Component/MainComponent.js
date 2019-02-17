@@ -25,9 +25,7 @@ const mapDispatchToProps = (dispatch) => ({
     updateLyfeStyle: (lyfestyle) => dispatch(updateLyfeStyle(lyfestyle)),
     deleteIngredient: (ingredient) => dispatch(deleteIngredient(ingredient)),
     fetchLyfeStyles: () => {dispatch(fetchLyfeStyles())},
-    fetchItems: () => {dispatch(fetchItems())},
     fetchIngredients: () => {dispatch(fetchIngredients())},
-    fetchFoodTags: () => {dispatch(fetchFoodTags())}
   })
 
 class Main extends Component {
@@ -41,10 +39,8 @@ class Main extends Component {
                 this.setState({ authUser: null })
             }
         })
-        
-        this.props.fetchItems();
+        if(firebase.auth().currentUser)
         this.props.fetchIngredients();
-        this.props.fetchFoodTags();
       }
     render() {
 

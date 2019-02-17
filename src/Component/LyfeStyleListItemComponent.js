@@ -10,6 +10,7 @@ import Avatar from '@material-ui/core/Avatar';
 import deepPurple from '@material-ui/core/colors/deepPurple';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
+import {Button} from 'reactstrap'
 import { withRouter } from 'react-router-dom'
 import firebase from '../Firebase/firebase'
 
@@ -52,6 +53,16 @@ class LyfeStyleListItemComponent extends React.Component {
        
         //alert(LyfeStyleType.id)
     }
+
+    handleSubscribeClick = (LyfeStyleType)=>{
+        console.log("Subscribe to:" + JSON.stringify(LyfeStyleType))
+        var payload={active:true,lyfestyleid:LyfeStyleType.id,userid:firebase.auth().currentUser.uid}
+        firebase.firestore().collection("subscriptions").doc().set(payload)
+        .then((data) => console.log("Dispatch", data))
+        .catch(error => console.log("Error:", error))
+        
+        
+    }
     render() {
         const { classes } = this.props;
         const LyfeStyleType = this.props.ItemDetails
@@ -65,13 +76,11 @@ class LyfeStyleListItemComponent extends React.Component {
                 </ListItemText>
                 <ListItemSecondaryAction>
 
-                    {LyfeStyleType.managed ? <></> : <IconButton onClick={() => this.handleListEditItemClick(LyfeStyleType)} aria-label="Delete">
+                    {LyfeStyleType.managed ? <></> : this.props.editButton?<IconButton onClick={() => this.handleListEditItemClick(LyfeStyleType)} aria-label="Delete">
                         <EditIcon />
-                    </IconButton>}
-                    <Switch
-                        onChange={this.handleToggle}
-                        checked={LyfeStyleType.active}
-                    />
+                    </IconButton>:<></>}
+                    {this.props.activeToggle?<Switch onChange={this.handleToggle} checked={LyfeStyleType.active}/>:<></>}
+                    {this.props.subscribeButton?<Button color="info" onClick={()=>this.handleSubscribeClick(LyfeStyleType)}>Subscribe</Button>:<></>}
                 </ListItemSecondaryAction>
             </ListItem>
         )

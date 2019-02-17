@@ -136,27 +136,6 @@ export const fetchIngredients = () => (dispatch) => {
   .catch(err => {
     console.log('Error getting documents', err);
   });
-    
-/*
-  lyfestyles.onSnapshot({ includeMetadataChanges: true },lssnapshot => {
-        lssnapshot.docChanges().forEach(change => {
-            if (change.type === 'added') {
-                console.log('Ingredient Change Added: ', change.doc.id);  
-                dispatch({type:ActionTypes.ADD_INGREDIENT,payload:{id:change.doc.id,...change.doc.data()}})
-            }
-            if (change.type === 'modified') {
-              console.log('Ingredient Change Modified: ', change.doc.id);
-              dispatch({type:ActionTypes.UPDATE_INGREDIENT,payload:{id:change.doc.id,...change.doc.data()}})
-            }
-            if (change.type === 'removed') {
-              console.log('Ingredient Change Removed: ', change.doc.id);
-            }
-        })
-    }, err => dispatch(lyfeStylesFailed(err)))
-
-        
-        //.catch(error => dispatch(ingredientsFailed(error.message)));
-        */
 }
 
 export const postIngredient = (name, tags) => (dispatch) => {
