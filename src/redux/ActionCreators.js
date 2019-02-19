@@ -15,43 +15,17 @@ export const addLyfeStyles = (payload) => ({
 export const lyfeStylesLoading = () => ({
     type: ActionTypes.LYFESTYLES_LOADING
 });
-const getSubscribeLyfestyle = (snapshot) => {
-    
-}
-export const fetchLyfeStyles = () => (dispatch) => {
-    if (firebase.auth().currentUser) {
-        //let ls = firebase.firestore().collection("lyfestyles")
-        let subscriptions = firebase.firestore().collection("subscriptions").where('userid', '==', firebase.auth().currentUser.uid)
-        subscriptions.onSnapshot({ includeMetadataChanges: true },snapshot => {
-            snapshot.docChanges().forEach(change => {
-                var source = snapshot.metadata.fromCache ? "local cache" : "server";
-          
-                if (change.type === 'added') {
-                    console.log(`Subscription Change Add(${source}): `, change.doc.id);
-                    //dispatch({type:ActionTypes.ADD_LYFESTYLE,payload:{id:change.documentId,...change.doc.data()}})
-                  }
-                  if (change.type === 'modified') {
-                    console.log(`Subscription Change Modified: (${source})`, change.doc.data());
-                    //dispatch({type:ActionTypes.UPDATE_LYFESTYLE,payload:{id:change.documentId,...change.doc.data()}})
-                  }
-                  if (change.type === 'removed') {
-                    console.log(`Subscription Change Removed: (${source})`, change.doc.data());
-                    dispatch({type:ActionTypes.DELETE_LYFESTYLE,payload:{id:change.documentId,...change.doc.data()}})
-                  }
-            })
-            dispatch({type:ActionTypes.LYFESTYLES_EMPTY})
-            snapshot.forEach(doc => {
-                let lyfestyles = firebase.firestore().collection("lyfestyles").where(firebase.firestore.FieldPath.documentId(),"==",doc.data().lyfestyleid)
-                lyfestyles.onSnapshot({ includeMetadataChanges: true },lssnapshot => {
-                    var source = snapshot.metadata.fromCache ? "local cache" : "server";
-                        console.log(`LyfeStyle update from:${source}`)
+const getSubscribeLyfestyle = (subscriptionData,dispatch) => {
+                let lyfestyles = firebase.firestore().collection("lyfestyles").where(firebase.firestore.FieldPath.documentId(),"==",subscriptionData.data().lyfestyleid)
+                lyfestyles.onSnapshot(lssnapshot => {
                     lssnapshot.docChanges().forEach(change => {
                         if (change.type === 'added') {
-                            dispatch({type:ActionTypes.ADD_LYFESTYLE,payload:{id:change.doc.id,subscriptionId:doc.id,active:doc.data().active,...change.doc.data()}})
+                            console.log('LyfeStyle Change Added: ', change.doc.id);
+                            dispatch({type:ActionTypes.ADD_LYFESTYLE,payload:{id:change.doc.id,subscriptionId:subscriptionData.id,active:subscriptionData.data().active,...change.doc.data()}})
                         }
                         if (change.type === 'modified') {
                           console.log('LyfeStyle Change Modified: ', change.doc.data());
-                          dispatch({type:ActionTypes.UPDATE_LYFESTYLE,payload:{id:change.documentId,subscriptionId:doc.id,active:doc.data().active,...change.doc.data()}})
+                          dispatch({type:ActionTypes.UPDATE_LYFESTYLE,payload:{id:change.documentId,subscriptionId:subscriptionData.id,active:subscriptionData.data().active,...change.doc.data()}})
                         }
                         if (change.type === 'removed') {
                           console.log('LyfeStyle Change Removed: ', change.doc.data());
@@ -59,7 +33,25 @@ export const fetchLyfeStyles = () => (dispatch) => {
                         }
                     })
                 }, err => dispatch(lyfeStylesFailed(err)))
+}
+export const fetchLyfeStyles = () => (dispatch) => {
+    dispatch({type:ActionTypes.LYFESTYLES_EMPTY})
+    if (firebase.auth().currentUser) {
+        //let ls = firebase.firestore().collection("lyfestyles")
+        let subscriptions = firebase.firestore().collection("subscriptions").where('userid', '==', firebase.auth().currentUser.uid)
+        subscriptions.onSnapshot(snapshot => {
+            snapshot.docChanges().forEach(change=>{
+                if(change.type==='added'){
+                    getSubscribeLyfestyle(change.doc,dispatch)
+                }
+                if(change.type==='modified'){
+                    getSubscribeLyfestyle(change.doc,dispatch)
+                }
             })
+            snapshot.docs.forEach(change => {
+                
+            })
+            
         }, err => dispatch(lyfeStylesFailed(err)))
     } else {
         dispatch(addLyfeStyles([]))
