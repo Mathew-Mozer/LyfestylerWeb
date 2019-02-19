@@ -41,19 +41,19 @@ class LyfeStyleEdit extends Component {
         //console.log("Delete Clicked",)
         if (this.isIngredientAdded(ingredient)) {
             this.props.dispatch(actions.remove('formLyfeStyleEditor.restrictions', this.props.formLyfeStyleEditor.restrictions.findIndex((item)=>item.id===ingredient.id)))
-            console.log("attempting to delete2")
-        } else {
-            console.log("attempting to delete")
         }
     }
 
     componentDidMount() {
+        if(this.props.match.params.LyfeStyleId){
         const docRef = firebase.firestore().collection("lyfestyles").doc(this.props.match.params.LyfeStyleId)
         docRef.get().then((snapshot) => {
             let data = snapshot.data();
+            console.log(JSON.stringify(data))
             this.props.dispatch(actions.change('formLyfeStyleEditor', data))
             this.props.dispatch(actions.change('formLyfeStyleEditor.id', this.props.match.params.LyfeStyleId))
         })
+    }
     }
     renderToggleInput = (field) => (
         <>{console.log("field", JSON.stringify(field))}
@@ -107,8 +107,9 @@ class LyfeStyleEdit extends Component {
                                         : <></>}
                                 </Col>
                             </Row>
-                            <Row>
-                                <Button color="primary" type="submit">{this.state.isUpdating ? 'Update' : 'Add'}</Button>
+                            <Row><Col>
+                                <Button color="primary" type="submit">{this.state.isUpdating ? 'Update' : 'Create'}</Button>
+                                </Col>
                             </Row>
                         </Form>
                     </Col>

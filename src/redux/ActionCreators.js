@@ -15,7 +15,9 @@ export const addLyfeStyles = (payload) => ({
 export const lyfeStylesLoading = () => ({
     type: ActionTypes.LYFESTYLES_LOADING
 });
-
+const getSubscribeLyfestyle = (snapshot) => {
+    
+}
 export const fetchLyfeStyles = () => (dispatch) => {
     if (firebase.auth().currentUser) {
         //let ls = firebase.firestore().collection("lyfestyles")
@@ -37,6 +39,7 @@ export const fetchLyfeStyles = () => (dispatch) => {
                     dispatch({type:ActionTypes.DELETE_LYFESTYLE,payload:{id:change.documentId,...change.doc.data()}})
                   }
             })
+            dispatch({type:ActionTypes.LYFESTYLES_EMPTY})
             snapshot.forEach(doc => {
                 let lyfestyles = firebase.firestore().collection("lyfestyles").where(firebase.firestore.FieldPath.documentId(),"==",doc.data().lyfestyleid)
                 lyfestyles.onSnapshot({ includeMetadataChanges: true },lssnapshot => {
@@ -44,7 +47,7 @@ export const fetchLyfeStyles = () => (dispatch) => {
                         console.log(`LyfeStyle update from:${source}`)
                     lssnapshot.docChanges().forEach(change => {
                         if (change.type === 'added') {
-                            dispatch({type:ActionTypes.ADD_LYFESTYLE,payload:{id:change.documentId,subscriptionId:doc.id,active:doc.data().active,...change.doc.data()}})
+                            dispatch({type:ActionTypes.ADD_LYFESTYLE,payload:{id:change.doc.id,subscriptionId:doc.id,active:doc.data().active,...change.doc.data()}})
                         }
                         if (change.type === 'modified') {
                           console.log('LyfeStyle Change Modified: ', change.doc.data());
@@ -281,10 +284,13 @@ export const addFoodTags = (payload) => ({
     payload: payload
 });
 
-export const addLyfeStyle = (payload) => {
-    firebase.firestore().collection("lyfestyles").doc().set(payload)
-        .then(console.log("document written"))
+export const addLyfeStyle = (payload) => (dispatch) =>{
+    //console.log(JSON.stringify({...payload}))
+        firebase.firestore().collection("lyfestyles").add(payload)
+        .then(ref=>firebase.firestore().collection("subscriptions").add({active:true,lyfestyleid:ref.id,userid:firebase.auth().currentUser.uid,timestamp:firebase.database.ServerValue.TIMESTAMP}))
+        .then(ref=>console.log("Added doc",ref.id))
         .catch(error => console.log("Error:", error))
+
 }
 export const updateLyfeStyle = (payload) => (dispatch) => {
     firebase.firestore().collection("lyfestyles").doc(payload.id).set(payload)

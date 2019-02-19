@@ -20,6 +20,8 @@ export const LyfeStyles = (state= {
             return{...state, isLoading:false, errMess:null,lyfestyles: state.lyfestyles.filter((itm)=>{if(itm.id!==action.payload.lyfestyleid)return(itm);return(false)})}
         case ActionTypes.LYFESTYLES_LOADING:
             return{...state, isLoading:true, errMess:null,lyfestyles: []}
+        case ActionTypes.LYFESTYLES_EMPTY:
+            return{...state, isLoading:false, errMess:null,lyfestyles: []}
         case ActionTypes.LYFESTYLES_FAILED:
             return{...state, isLoading:false, errMess:action.payload,lyfestyles: []}
         default:

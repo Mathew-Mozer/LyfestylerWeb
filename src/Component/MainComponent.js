@@ -52,8 +52,8 @@ class Main extends Component {
             <div>
                 <Header/>
                 <Switch>
-                    <Route path="/home" render={()=><Home lyfestyles={this.props.lyfestyles} ingredients={this.props.ingredients}/>} />
-                    <Route path="/lyfestyleedit/:LyfeStyleId" render={(props)=><LyfeStyleEdit {...props} editLyfeStyle={this.props.editLyfeStyle} deleteLyfeStyle={this.props.deleteLyfeStyle} postLyfeStyle={this.props.addLyfeStyle} putLyfeStyle={this.props.updateLyfeStyle} fetchIngredients="duh" ingredients={this.props.ingredients} />} />
+                    <Route path="/home" render={(props)=><Home {...props} lyfestyles={this.props.lyfestyles} ingredients={this.props.ingredients}/>} />
+                    <Route path="/lyfestyleedit/:LyfeStyleId?" render={(props)=><LyfeStyleEdit {...props} editLyfeStyle={this.props.editLyfeStyle} deleteLyfeStyle={this.props.deleteLyfeStyle} postLyfeStyle={this.props.addLyfeStyle} putLyfeStyle={this.props.updateLyfeStyle} fetchIngredients="duh" ingredients={this.props.ingredients} />} />
                     <Route path="/woe/:LyfeStyleId" component={LyfeStyleWithId}/>            
                     <Route path="/scan/:upc" component={scanItem}/>            
                     <Redirect to="/home" />
