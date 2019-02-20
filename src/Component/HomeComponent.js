@@ -17,7 +17,7 @@ const styles = theme => ({
       },
     extendedIcon: {
       marginRight: theme.spacing.unit,
-    },
+    }
   });
 
 class Home extends Component {
@@ -25,6 +25,13 @@ class Home extends Component {
     state = {
         expandedItem: -1,
         lyfestyles:[]
+    }
+    renderLabel=(ingredient)=>{
+        if(ingredient.factRestriction){
+            return (`${ingredient.name} ${ingredient.greaterthan?'>':'<'} ${ingredient.value}${ingredient.measure}`)
+        }else{
+            return(ingredient.name)
+        }
     }
     aggregateIngredient(){
         let restrictions=[];
@@ -36,7 +43,7 @@ class Home extends Component {
             })
 
         })
-        return(<>{restrictions.length>0?restrictions.map((ingredient)=><Chip key={ingredient.id} label={ingredient.name} />):<>You currently do not have any sensativities. Activate a lyfestyle to show your restrictions</>}</>)
+        return(<>{restrictions.length>0?restrictions.map((ingredient)=><Chip color={ingredient.factRestriction?'secondary':'primary'} key={ingredient.id} label={this.renderLabel(ingredient)} />):<>You currently do not have any sensativities. Activate a lyfestyle to show your restrictions</>}</>)
     }
 
     componentDidMount(){
@@ -70,7 +77,7 @@ class Home extends Component {
             return(<div>You aren't logged in</div>)
         }
         return (
-            <div>
+                    <div>
                 <Container fluid>
                     <Row style={{margin:"5px"}}>
                         <Col className="border border-info rounded TileBorder" xs={{size:12,order:2}} md={{ size: 6,order:0 }} >

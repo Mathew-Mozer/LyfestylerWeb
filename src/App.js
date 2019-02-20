@@ -6,6 +6,7 @@ import { ConfigureStore } from './redux/configureStore';
 import firebase from 'firebase';
 import './App.css';
 
+
 const store = ConfigureStore();
 // Configure Firebase.
 
