@@ -11,7 +11,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import AddCircle from '@material-ui/icons/AddCircle'
 import IconButton from '@material-ui/core/IconButton';
 import ConfirmDialog from './ConfirmDialog'
-import { Row, Container, Col, Button, InputGroup, InputGroupAddon, Input,Label } from 'reactstrap'
+import { Row, Container, Col, Button, InputGroup, InputGroupAddon, Input } from 'reactstrap'
 import IngredientModal from './Modals/IngredientModal'
 
 const styles = theme => ({

@@ -1,6 +1,5 @@
 import React from 'react'
-import { Col, Row, Container,Button } from 'reactstrap'
-import { cpus } from 'os';
+import { Col, Row,Button } from 'reactstrap'
 
 export const FoodIngredient = (ItemDetails) => {
     const renderRow = (itemName,itemDetail) =>{

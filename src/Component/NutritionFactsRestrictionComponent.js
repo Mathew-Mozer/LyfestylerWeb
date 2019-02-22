@@ -155,9 +155,6 @@ class NutritionFactsRestriction extends React.Component {
                         label="Calories"
                         value={this.getValueById(NutritionIds.CALORIES)}
                         onChange={this.handleChange}
-                        InputProps={{
-                            endAdornment: <InputAdornment position="end"></InputAdornment>,
-                        }}
                     />
                     </Col>
                 </Row>
