@@ -28,7 +28,7 @@ class Home extends Component {
     }
     renderLabel=(ingredient)=>{
         if(ingredient.factRestriction){
-            return (`${ingredient.name} ${ingredient.greaterthan?'>':'<'} ${ingredient.value}${ingredient.measure}`)
+            return (`${ingredient.name} ${ingredient.greaterthan?'<':'>'} ${ingredient.value}${ingredient.measure}`)
         }else{
             return(ingredient.name)
         }
@@ -38,10 +38,24 @@ class Home extends Component {
         this.props.lyfestyles.lyfestyles.forEach((item)=>{
             if(item.restrictions&&item.active)
             item.restrictions.forEach((item)=>{
-                restrictions=restrictions.some((itm)=>itm.id===item.id)?restrictions:restrictions.concat(item)
+                if(item.factRestriction){
+                    var itemId=restrictions.findIndex((itm)=>itm.id===item.id)
+                    if(itemId>-1){
+                        if(+restrictions[itemId].value>+item.value){
+                            console.log("Replace",restrictions[itemId].value,"with",item.value)    
+                            restrictions[itemId].value=item.value
+                        }
+                    }else{
+                        restrictions.push(item)
+                    }
+                    
+                }else{
+                    restrictions=restrictions.some((itm)=>itm.id===item.id)?restrictions:restrictions.concat(item)
+                }
+                
             })
         })
-        return(<>{restrictions.length>0?restrictions.map((ingredient)=><Chip color={ingredient.factRestriction?'secondary':'primary'} key={ingredient.id} label={this.renderLabel(ingredient)} />):<>You currently do not have any sensativities. Activate a lyfestyle to show your restrictions</>}</>)
+        return(<>{restrictions.length>0?restrictions.map((ingredient)=><Chip color={ingredient.factRestriction?'secondary':'primary'} key={ingredient.id} label={this.renderLabel(ingredient)} />):<>You currently do not have any restrictions. Activate a lyfestyle to show your restrictions</>}</>)
     }
 
     componentDidMount(){
@@ -94,8 +108,8 @@ class Home extends Component {
                             </Row>
                         </Col>
                         <Col className="border border-info rounded TileBorder" xs={{size:12,order:0}} md={{ size: 6,order:1 }}>
-                            Current LyfeStyle Sensativities<br></br>
-                                {this.aggregateIngredient()}
+                            Current LyfeStyle Restrictions<br></br>
+                            {this.aggregateIngredient()}
                             
                         </Col>
                         <Col className="border border-info rounded TileBorder" xs={{size:12,order:2}} md={{ size: 6,order:2 }} >

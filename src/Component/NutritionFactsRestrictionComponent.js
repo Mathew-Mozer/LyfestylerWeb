@@ -99,6 +99,7 @@ class NutritionFactsRestriction extends React.Component {
             case "Sodium":
                 valObject.id = 6
                 valObject.name = "Sodium"
+                valObject.measure = "mg"
                 valObject.value = checkAll.test(event.target.value) ? event.target.value : ""
                 break;
             case "TotalCarbohydrates":
@@ -223,7 +224,7 @@ class NutritionFactsRestriction extends React.Component {
                             value={this.getValueById(NutritionIds.SODIUM)}
                             onChange={this.handleChange}
                             InputProps={{
-                                endAdornment: <InputAdornment position="end">g</InputAdornment>,
+                                endAdornment: <InputAdornment position="end">mg</InputAdornment>,
                             }}
                         /></Col>
                 </Row>
