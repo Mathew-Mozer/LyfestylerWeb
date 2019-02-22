@@ -5,8 +5,6 @@ export const TRANS_FAT=4
 export const TOTAL_CARBOHYDRATES=8
 export const PROTEIN=11
 export const SUGARS=10
-
-
 export const CHOLESTEROL=5
 export const SODIUM=6
 export const DIETARY_FIBER=9
