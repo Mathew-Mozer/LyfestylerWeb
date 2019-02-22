@@ -35,20 +35,17 @@ class Home extends Component {
     }
     aggregateIngredient(){
         let restrictions=[];
-
         this.props.lyfestyles.lyfestyles.forEach((item)=>{
             if(item.restrictions&&item.active)
             item.restrictions.forEach((item)=>{
                 restrictions=restrictions.some((itm)=>itm.id===item.id)?restrictions:restrictions.concat(item)
             })
-
         })
         return(<>{restrictions.length>0?restrictions.map((ingredient)=><Chip color={ingredient.factRestriction?'secondary':'primary'} key={ingredient.id} label={this.renderLabel(ingredient)} />):<>You currently do not have any sensativities. Activate a lyfestyle to show your restrictions</>}</>)
     }
 
     componentDidMount(){
         this.getLyfeStyles()
-        
     }
 
     getLyfeStyles(){
