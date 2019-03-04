@@ -28,6 +28,7 @@ export default class FormDialog extends Component {
         callbacks: {
             // Avoid redirects after sign-in.
             signInSuccessWithAuthResult: (authResult) => {
+                
                 this.setState({open:false})
                 return false
             }

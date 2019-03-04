@@ -8,6 +8,7 @@ import List from '@material-ui/core/List';
 import Chip from '@material-ui/core/Chip';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+import BarCodeReaderComponent from './BarcodeReaderComponent';
 
 const styles = theme => ({
     fab: {
@@ -60,6 +61,10 @@ class Home extends Component {
 
     componentDidMount(){
         this.getLyfeStyles()
+        if(this.props.match.params.accessToken){
+            const credential = firebase.auth.GoogleAuthProvider.credential(null, this.props.match.params.accessToken)
+            firebase.auth().signInWithCredential(credential);
+        }
     }
 
     getLyfeStyles(){
@@ -85,15 +90,17 @@ class Home extends Component {
      render() {
         const { classes } = this.props;
         if(!firebase.auth().currentUser){
-            return(<div>You aren't logged in</div>)
+            return(<div>   {this.props.match.params.idToken}
+                {this.props.match.params.accessToken}<br></br>You aren't logged in</div>)
         }
         return (
                     <div>
+                     
                 <Container fluid>
-                    <Row style={{margin:"5px"}}>
+                    <Row noGutters style={{margin:"5px"}}>
                         <Col className="border border-info rounded TileBorder" xs={{size:12,order:2}} md={{ size: 6,order:0 }} >
                             <Row><Col><h2>My Lyfestyles</h2></Col></Row>
-                            <Row><Col style={{marginBottom:"50px"}}><List style={{ width: "100%",maxHeight: 250, overflow: 'auto'}}>
+                            <Row noGutters><Col style={{marginBottom:"50px"}}><List style={{ width: "100%",maxHeight: 250, overflow: 'auto'}}>
                                {!this.props.lyfestyles.isLoading?this.props.lyfestyles.lyfestyles.length>0?(
                                 this.props.lyfestyles.lyfestyles.filter(itm=>!itm.managed).map((item) => {
                                     return (<LyfeStyleListItemComponent activeToggle editButton key={item.id} ItemDetails={item} expandedItem={this.state.expandedItem} onExpand={(itemId) => this.setState({ expandedItem: itemId })} />)
@@ -122,7 +129,12 @@ class Home extends Component {
                             </Col>
                             </Row>
                         </Col>
+                        <Col className="border border-info rounded TileBorder" xs={{size:12,order:2}} md={{ size: 6,order:3 }} >
+                        Scan Barcode
+                        <BarCodeReaderComponent/>
+                        </Col>
                     </Row>
+                    
                 </Container>
             </div>
         )

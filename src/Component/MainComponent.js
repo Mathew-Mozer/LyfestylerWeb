@@ -29,6 +29,9 @@ const mapDispatchToProps = (dispatch) => ({
   })
 
 class Main extends Component {
+    state={
+        isNative:false
+    }
 
     componentDidMount(){
         const userChanged = firebase.auth().onAuthStateChanged(authUser => {
@@ -43,19 +46,35 @@ class Main extends Component {
         })
         
       }
+      LyfeStyleWithId = ({match}) => <WoeViewer LyfeStyle={this.props.LyfeStyles.filter((LyfeStyle) => LyfeStyle.id===parseInt(match.params.LyfeStyleId,10))[0]}/>
+      scanItem = ({match}) => <ItemViewer ingredients={this.props.ingredients} allergies={this.aggrigatedAllergies()} upc={match.params.upc} type={match.params.type} lyfestyles={this.props.lyfestyles}/>
+      aggrigatedAllergies = ()=> {
+        const allergies = []
+        console.log("Aggregate is changing")
+        if(!this.props.lyfestyles.isLoading){
+            this.props.lyfestyles.lyfestyles.filter((ls)=>ls.active).map((ls)=>{
+                ls.restrictions.map((rs)=>{
+                    allergies.push(rs.name.toLowerCase())
+                    rs.tags.map((tag)=>{
+                        var tmp = this.props.ingredients.ingredients.filter((item)=>item.id===tag)
+                        if(tmp.length>0)
+                        allergies.push(tmp[0].name)
+                    })
+                })
+                
+            })
+        }
+        return(allergies)
+      }
     render() {
-
-        const LyfeStyleWithId = ({match}) => <WoeViewer LyfeStyle={this.props.LyfeStyles.filter((LyfeStyle) => LyfeStyle.id===parseInt(match.params.LyfeStyleId,10))[0]}/>
-        const scanItem = ({match}) => <ItemViewer item={this.props.LyfeStyle.filter((item) => item.UPC==parseInt(match.params.upc,10))[0]}/>
-
         return (
             <div>
                 <Header/>
                 <Switch>
-                    <Route path="/home" render={(props)=><Home {...props} lyfestyles={this.props.lyfestyles} ingredients={this.props.ingredients}/>} />
+                    <Route path="/home/:accessToken?" render={(props)=><Home {...props} lyfestyles={this.props.lyfestyles} ingredients={this.props.ingredients}/>} />
                     <Route path="/lyfestyleedit/:LyfeStyleId?" render={(props)=><LyfeStyleEdit {...props} editLyfeStyle={this.props.editLyfeStyle} deleteLyfeStyle={this.props.deleteLyfeStyle} postLyfeStyle={this.props.addLyfeStyle} putLyfeStyle={this.props.updateLyfeStyle} fetchIngredients="duh" ingredients={this.props.ingredients} />} />
-                    <Route path="/woe/:LyfeStyleId" component={LyfeStyleWithId}/>            
-                    <Route path="/scan/:upc" component={scanItem}/>            
+                    <Route path="/woe/:LyfeStyleId" component={this.LyfeStyleWithId}/>
+                    <Route path="/scan/:upc?/:type?" component={this.scanItem}/>            
                     <Redirect to="/home" />
                 </Switch>
             </div>

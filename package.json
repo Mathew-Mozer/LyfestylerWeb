@@ -11,6 +11,7 @@
     "firebaseui": "^3.5.2",
     "material-ui": "^0.20.2",
     "react": "^16.8.1",
+    "react-barcode-reader": "^0.0.1",
     "react-dom": "^16.8.1",
     "react-firebaseui": "^3.1.2",
     "react-redux": "^6.0.0",

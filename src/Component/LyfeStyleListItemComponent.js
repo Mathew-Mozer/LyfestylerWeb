@@ -67,7 +67,7 @@ class LyfeStyleListItemComponent extends React.Component {
         const { classes } = this.props;
         const LyfeStyleType = this.props.ItemDetails
         return (
-            <ListItem style={{ height: "45px" }} key={LyfeStyleType.id} button onClick={this.toggle}>
+            <ListItem style={{ padding:"0px", height: "45px" }} key={LyfeStyleType.id} button onClick={this.toggle}>
                 <ListItemAvatar>
                     <Avatar className={classes.purpleAvatar}>K</Avatar>
                 </ListItemAvatar>
