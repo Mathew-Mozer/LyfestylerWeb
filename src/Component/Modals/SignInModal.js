@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import {startUserListener} from '../../redux/ActionCreators'
 import firebase from 'firebase';
+import { connect } from 'react-redux';
 
+const mapDispatchToProps = (dispatch) => ({
+    startUserListener: () =>{dispatch(startUserListener())}
+  })
 
-
-export default class FormDialog extends Component {
+class FormDialog extends Component {
     state = {
         open: false,
         isSignedIn: false
@@ -28,7 +30,7 @@ export default class FormDialog extends Component {
         callbacks: {
             // Avoid redirects after sign-in.
             signInSuccessWithAuthResult: (authResult) => {
-                
+                this.props.startUserListener()
                 this.setState({open:false})
                 return false
             }
@@ -38,7 +40,9 @@ export default class FormDialog extends Component {
     // Listen to the Firebase Auth state and set the local state.
     componentDidMount() {
         this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
-            (user) => this.setState({ isSignedIn: !!user })
+            (user) => {this.setState({ isSignedIn: user })
+            this.props.startUserListener()
+        }
         );
     }
 
@@ -79,3 +83,4 @@ export default class FormDialog extends Component {
         }
     }
 }
+export default connect(null,mapDispatchToProps)(FormDialog)

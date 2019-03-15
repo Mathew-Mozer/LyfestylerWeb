@@ -20,7 +20,7 @@ export const LyfeStyles = (state= {
         case ActionTypes.LYFESTYLES_EMPTY:
             return{...state, isLoading:false, errMess:null,lyfestyles: []}
         case ActionTypes.LYFESTYLES_FAILED:
-            return{...state, isLoading:false, errMess:action.payload,lyfestyles: []}
+            return{...state, isLoading:false, errMess:action.payload}
         default:
             return state
     }

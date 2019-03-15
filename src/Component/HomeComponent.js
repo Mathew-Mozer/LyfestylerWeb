@@ -37,7 +37,7 @@ class Home extends Component {
     aggregateIngredient(){
         let restrictions=[];
         this.props.lyfestyles.lyfestyles.forEach((item)=>{
-            if(item.restrictions&&item.active)
+            if(item.restrictions&&item.subscription.active)
             item.restrictions.forEach((item)=>{
                 if(item.factRestriction){
                     var itemId=restrictions.findIndex((itm)=>itm.id===item.id)
@@ -90,8 +90,9 @@ class Home extends Component {
      render() {
         const { classes } = this.props;
         if(!firebase.auth().currentUser){
-            return(<div>   {this.props.match.params.idToken}
-                {this.props.match.params.accessToken}<br></br>You aren't logged in</div>)
+            if(this.props.match.params.accessToken)
+            return(<div>Logging in...</div>)
+            return(<div>You aren't logged in</div>)
         }
         return (
                     <div>
@@ -103,7 +104,7 @@ class Home extends Component {
                             <Row noGutters><Col style={{marginBottom:"50px"}}><List style={{ width: "100%",maxHeight: 250, overflow: 'auto'}}>
                                {!this.props.lyfestyles.isLoading?this.props.lyfestyles.lyfestyles.length>0?(
                                 this.props.lyfestyles.lyfestyles.filter(itm=>!itm.managed).map((item) => {
-                                    return (<LyfeStyleListItemComponent activeToggle editButton key={item.id} ItemDetails={item} expandedItem={this.state.expandedItem} onExpand={(itemId) => this.setState({ expandedItem: itemId })} />)
+                                    return (<LyfeStyleListItemComponent activeToggle editButton={item.subscription.write} key={item.id} ItemDetails={item} expandedItem={this.state.expandedItem} onExpand={(itemId) => this.setState({ expandedItem: itemId })} />)
                                 })):(
                                    <div>You aren't currently subscribed to any lyfestyles. Check out some public Lyfestyles to get started</div>     
                                 ):<div>Loading</div>}
@@ -130,8 +131,9 @@ class Home extends Component {
                             </Row>
                         </Col>
                         <Col className="border border-info rounded TileBorder" xs={{size:12,order:2}} md={{ size: 6,order:3 }} >
-                        Scan Barcode
-                        <BarCodeReaderComponent/>
+                        Scan History
+                        <BarCodeReaderComponent userdata={this.props.userdata} allergies={this.props.allergies}/>
+                        
                         </Col>
                     </Row>
                     

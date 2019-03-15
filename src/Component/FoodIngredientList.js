@@ -13,6 +13,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ConfirmDialog from './ConfirmDialog'
 import { Row, Container, Col, Button, InputGroup, InputGroupAddon, Input } from 'reactstrap'
 import IngredientModal from './Modals/IngredientModal'
+import firebase from '../Firebase/firebase'
 
 const styles = theme => ({
   root: {
@@ -35,12 +36,33 @@ class FoodIngredientList extends React.Component {
       selectedEditIngredient: ingredient
     })
   };
-  
+
+  handleDeleteIngredient = (ingredient) => {
+    console.log("ingedient",ingredient)
+    this.setState({ selectedDeleteIngredient: {} })
+    var deleteDoc = firebase.firestore().collection('ingredients').doc(ingredient.id).delete();
+    //console.log("delete",deleteDoc)
+  };
+
   handleListItemClick = (ingredient) => this.props.onClick(ingredient)
   getIngredientFromArray = (id) => this.props.ingredients.filter((ing) => ing.id === id)[0].name
   getTagList = (ingredient) => ingredient?ingredient?this.props.ingredients.ingredients.filter((ing) => ingredient.includes(ing.id)).map((item) => item.name).toString():"":""
-  deleteItem = (answer) => answer?this.props.deleteIngredient(this.state.selectedDeleteIngredient):  this.setState({ selectedDeleteIngredient: {} })
-    
+  deleteItem = (answer) => answer?this.handleDeleteIngredient(this.state.selectedDeleteIngredient):  this.setState({ selectedDeleteIngredient: {} })
+  showIngredientModal = () =>{
+    if(this.props.userdata.userdata.manageIngredients)
+    return(<InputGroupAddon addonType="prepend"><IngredientModal ingredient={this.state.selectedEditIngredient} color="primary" buttonLabel={<span><AddCircle/></span>} postIngredient={this.props.postIngredient} putIngredient={this.props.putIngredient} ingredients={this.props.ingredients} /></InputGroupAddon>)
+  }  
+  showEditIngredientButtons=(ingredient) =>{
+    if(this.props.userdata.userdata.manageIngredients)
+    return(<ListItemSecondaryAction>
+      <IconButton onClick={() => this.handleListEditItemClick(ingredient)} aria-label="Delete">
+        <EditIcon />
+      </IconButton>
+      <IconButton onClick={() => this.setState({ selectedDeleteIngredient: ingredient })} aria-label="Delete">
+        <DeleteIcon />
+      </IconButton>
+    </ListItemSecondaryAction>)
+  }
   render() {
     const { classes } = this.props;
 
@@ -58,7 +80,7 @@ class FoodIngredientList extends React.Component {
           </Row>
           <Row noGutters>
             <InputGroup style={{ marginBottom: "5px" }}>
-            <InputGroupAddon addonType="prepend"><IngredientModal ingredient={this.state.selectedEditIngredient} color="primary" buttonLabel={<span><AddCircle/></span>} postIngredient={this.props.postIngredient} putIngredient={this.props.putIngredient} ingredients={this.props.ingredients} /></InputGroupAddon>
+              {this.showIngredientModal()}
               <Input value={this.state.filterParam} onChange={(param) => this.setState({ filterParam: param.target.value })} aria-describedby="emailHelp" placeholder="Ingredient Search" />
               <InputGroupAddon addonType="append"><Button onClick={() => this.setState({ filterParam: "" })} color="danger">X</Button></InputGroupAddon>
             </InputGroup>
@@ -72,14 +94,7 @@ class FoodIngredientList extends React.Component {
                     button
                     onClick={() => this.handleListItemClick(ingredient)}>
                     <ListItemText primary={ingredient.name} secondary={this.getTagList(ingredient.tags)} />
-                    <ListItemSecondaryAction>
-                      <IconButton onClick={() => this.handleListEditItemClick(ingredient)} aria-label="Delete">
-                        <EditIcon />
-                      </IconButton>
-                      <IconButton onClick={() => this.setState({ selectedDeleteIngredient: ingredient })} aria-label="Delete">
-                        <DeleteIcon />
-                      </IconButton>
-                    </ListItemSecondaryAction>
+                    {this.showEditIngredientButtons(ingredient)}
                   </ListItem>)
                 })}
               </List>

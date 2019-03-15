@@ -17,3 +17,5 @@ export const INGREDIENTS_LOADING = 'INGREDIENTS_LOADING';
 export const INGREDIENTS_FAILED = 'INGREDIENTS_FAILED';
 
 export const ADD_FOODTAGS = 'ADD_FOODTAGS' //Adds all Ingredients to the ingredient array
+
+export const SET_USERDATA = 'SET_USERDATA'

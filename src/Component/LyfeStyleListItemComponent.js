@@ -40,7 +40,8 @@ class LyfeStyleListItemComponent extends React.Component {
             checked: !checked,
         });
         */
-        firebase.firestore().collection("subscriptions").doc(this.props.ItemDetails.subscriptionId).update({active:!this.props.ItemDetails.active})
+       console.log("clicked",this.props.ItemDetails.subscriptionId)
+        firebase.firestore().collection("subscriptions").doc(firebase.auth().currentUser.uid).collection("lyfestyles").doc(this.props.ItemDetails.subscriptionId).update({active:!this.props.ItemDetails.subscription.active})
     .catch(error=> console.log("Error:",error))
     
     };
@@ -48,7 +49,7 @@ class LyfeStyleListItemComponent extends React.Component {
         console.log("Clicked", LyfeStyleType)
         let { history } = this.props;
         history.push({
-            pathname: `/lyfestyleedit/${LyfeStyleType.id}`,
+            pathname: `/lyfestyleedit/${LyfeStyleType.id}`
         });
        
         //alert(LyfeStyleType.id)
@@ -56,8 +57,8 @@ class LyfeStyleListItemComponent extends React.Component {
 
     handleSubscribeClick = (LyfeStyleType)=>{
         console.log("Subscribe to:" + JSON.stringify(LyfeStyleType))
-        var payload={active:true,lyfestyleid:LyfeStyleType.id,userid:firebase.auth().currentUser.uid}
-        firebase.firestore().collection("subscriptions").doc().set(payload)
+        var payload={read:true,subscribed:true,active:true}
+        firebase.firestore().collection("subscriptions").doc(firebase.auth().currentUser.uid).collection("lyfestyles").doc(LyfeStyleType.id).set(payload)
         .then((data) => console.log("Dispatch", data))
         .catch(error => console.log("Error:", error))
         
@@ -79,7 +80,7 @@ class LyfeStyleListItemComponent extends React.Component {
                     {LyfeStyleType.managed ? <></> : this.props.editButton?<IconButton onClick={() => this.handleListEditItemClick(LyfeStyleType)} aria-label="Delete">
                         <EditIcon />
                     </IconButton>:<></>}
-                    {this.props.activeToggle?<Switch onChange={this.handleToggle} checked={LyfeStyleType.active}/>:<></>}
+                    {this.props.activeToggle?<Switch onChange={this.handleToggle} checked={LyfeStyleType.subscription.active}/>:<></>}
                     {this.props.subscribeButton?<Button color="info" onClick={()=>this.handleSubscribeClick(LyfeStyleType)}>Subscribe</Button>:<></>}
                 </ListItemSecondaryAction>
             </ListItem>
